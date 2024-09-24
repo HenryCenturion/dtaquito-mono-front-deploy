@@ -1,0 +1,63 @@
+<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+<h1 class="title">Sport spaces</h1>
+<div class="filters-container">
+  <mat-form-field>
+    <mat-label>Sport</mat-label>
+    <mat-select [(ngModel)]="filter.sportId" (selectionChange)="applyFilters()">
+      <mat-option *ngFor="let sport of sports" [value]="sport.id">{{ sport.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Game Mode</mat-label>
+    <mat-select [(ngModel)]="filter.gamemode" (selectionChange)="applyFilters()">
+      <mat-option *ngFor="let mode of gamemodes" [value]="mode">{{ mode }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>District</mat-label>
+    <mat-select [(ngModel)]="filter.district" (selectionChange)="applyFilters()">
+      <mat-option *ngFor="let district of districts" [value]="district">{{ district }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Min Price</mat-label>
+    <input matInput type="number" [(ngModel)]="filter.minPrice" (input)="applyFilters()">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Max Price</mat-label>
+    <input matInput type="number" [(ngModel)]="filter.maxPrice" (input)="applyFilters()">
+  </mat-form-field>
+
+  <button class="clear-filters" (click)="clearFilters()">Clear Filters</button>
+</div>
+
+<button *ngIf="dataOwner && canAddMoreSportSpaces" mat-flat-button (click)="addSportSpace()">Add sport space</button>
+
+<div class="card-container">
+  <mat-card class="example-card" *ngFor="let sportSpace of filteredSportSpaces" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>{{ sportSpace.name }}</mat-card-title>
+      <mat-card-subtitle>{{ sportSpace.district }}</mat-card-subtitle>
+      <mat-card-subtitle>ID: {{ sportSpace.id }}</mat-card-subtitle>
+      <div class="icon-container">
+        <button mat-icon-button *ngIf="dataOwner" (click)="editSportSpace(sportSpace)" class="edit-button">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="price-tag">
+        <mat-icon>attach_money</mat-icon>
+        <span>{{ sportSpace.price }}</span>
+      </div>
+    </mat-card-header>
+    <img [src]="sportSpace.imageUrl">
+    <mat-card-content>
+      <p>Gamemode: {{ sportSpace.gamemode }}</p>
+      <p>Schedule: {{ sportSpace.StartTime }} to {{ sportSpace.endTime }}</p>
+    </mat-card-content>
+  </mat-card>
+
+</div>

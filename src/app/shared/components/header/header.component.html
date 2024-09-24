@@ -1,0 +1,24 @@
+<mat-toolbar>
+  <a routerLink="/home" routerLinkActive="active">D'Taquito</a>
+  <span class="spacer"></span>
+
+  <div *ngIf="isAuthenticated() && dataPlayer" class="credits-container">
+    <button mat-icon-button (click)="reloadCredits()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <span> Credits </span>
+    <span>{{ userCredits }}</span>
+  </div>
+
+  <span class="spacer"></span>
+  <a *ngIf="!isAuthenticated()" routerLink="/login">Log In</a>
+  <a *ngIf="isAuthenticated() && dataPlayer" routerLink="/rooms">Rooms</a>
+  <a *ngIf="isAuthenticated()" routerLink="/sport-spaces">Sport Spaces</a>
+  <a *ngIf="isAuthenticated() && dataOwner" routerLink="/subscriptions">Subscriptions</a>
+  <button *ngIf="isAuthenticated()" mat-icon-button routerLink="/profile">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <button *ngIf="isAuthenticated()" mat-icon-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>

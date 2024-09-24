@@ -1,0 +1,49 @@
+<form class="example-form" (ngSubmit)="onSubmit()">
+  <h2 class="form-title">Registro de Usuario</h2>
+  <mat-form-field class="example-full-width">
+    <mat-label>Name</mat-label>
+    <input type="text" matInput [formControl]="nameFormControl" required>
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input type="email" matInput [formControl]="emailFormControl" required>
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput [formControl]="passwordFormControl" required>
+    <mat-error *ngIf="passwordFormControl.hasError('required')">
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Role</mat-label>
+    <mat-select [formControl]="roleFormControl" required>
+      <mat-option value="R">Player</mat-option>
+      <mat-option value="P">Owner</mat-option>
+    </mat-select>
+    <mat-error *ngIf="roleFormControl.hasError('required')">
+      Role is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Bank Account Email</mat-label>
+    <input type="text" matInput [formControl]="bankAccountFormControl" required>
+    <mat-error *ngIf="bankAccountFormControl.hasError('email') && !bankAccountFormControl.hasError('required')">
+      Please enter a valid <strong>paypal email address</strong>
+    </mat-error>
+    <mat-error *ngIf="bankAccountFormControl.hasError('required')">
+      Bank Account Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <button mat-flat-button class="signup-button" type="submit">Register</button>
+</form>
+<div id="paypal-button-container"></div>

@@ -1,0 +1,56 @@
+/* General Styles */
+mat-toolbar {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text color for better contrast */
+  font-family: 'Roboto', sans-serif; /* Clean, modern font */
+  padding: 0 16px; /* Padding for the toolbar content */
+}
+
+mat-toolbar a {
+  color: white; /* White color for the links */
+  text-decoration: none; /* Remove underline from links */
+  font-weight: 500; /* Slightly bolder font for the links */
+  margin-right: 20px; /* Spacing between links */
+}
+
+mat-toolbar a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.spacer {
+  flex: 1 1 auto; /* Spacer to push content to the sides */
+}
+
+/* Credits Container Styles */
+.credits-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Spacing between credits content */
+}
+
+.credits-container span {
+  font-weight: bold; /* Bold text for emphasis */
+}
+
+/* Icon Button Styles */
+mat-icon-button {
+  color: white; /* White color for icon buttons */
+}
+
+mat-icon-button:hover mat-icon {
+  color: #81C784; /* Lighter green on hover */
+}
+
+mat-icon {
+  font-size: 24px; /* Standard icon size */
+}
+
+/* Active Link Styles */
+a.active {
+  border-bottom: 2px solid #81C784; /* Light green underline for active link */
+}
+
+/* Logout Button */
+mat-icon-button.logout-button {
+  margin-left: 20px; /* Spacing before the logout button */
+}

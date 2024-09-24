@@ -1,0 +1,26 @@
+<h2>Create Room</h2>
+<form [formGroup]="createRoomForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Room Name</mat-label>
+    <input matInput formControlName="roomName" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Sport Space ID</mat-label>
+    <input matInput formControlName="sportSpaceId" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Game Date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="openingDate" [min]="minDate" required>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Game Time</mat-label>
+    <input matInput type="time" formControlName="openingTime" required>
+  </mat-form-field>
+
+  <button mat-button type="submit" [disabled]="createRoomForm.invalid">Create Room</button>
+</form>

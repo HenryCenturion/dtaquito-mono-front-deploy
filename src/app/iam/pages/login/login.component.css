@@ -1,0 +1,110 @@
+/* General Form Styles */
+.login-form {
+  max-width: 400px; /* Constrain form width */
+  margin: 40px auto; /* Center the form */
+  padding: 20px; /* Add padding around the form */
+  background-color: #f5f5f5; /* Light gray background for the form */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  animation: fadeIn 1s ease-in-out; /* Fade-in effect for form */
+}
+
+/* Title Styles */
+.login-title {
+  text-align: center; /* Center align the title */
+  color: #43A047; /* Green title color */
+  font-size: 24px; /* Larger font size */
+  margin-bottom: 20px; /* Space below the title */
+  font-weight: bold; /* Bold font for the title */
+}
+
+/* Input Field Styles */
+.login-input {
+  width: 100%; /* Full width inputs */
+  margin-bottom: 20px; /* Space between inputs */
+}
+
+.mat-form-field {
+  background: white; /* White background for input fields */
+  border-radius: 4px; /* Slightly rounded input fields */
+}
+
+/* Button Styles with Animation */
+.login-button, .signup-button {
+  width: 100%; /* Full width buttons */
+  background-color: #43A047; /* Fresh green button background */
+  color: white; /* White text color */
+  margin-top: 10px; /* Space above buttons */
+  padding: 10px; /* Padding for larger touch area */
+  border-radius: 4px; /* Rounded button corners */
+  font-weight: bold; /* Bold text for buttons */
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.login-button:hover, .signup-button:hover {
+  background-color: #2E7D32; /* Darker green on hover */
+}
+
+/* Ripple Effect on Button Click */
+.login-button:active::before, .signup-button:active::before {
+  content: '';
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  top: 50%;
+  left: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  animation: ripple 0.6s ease-out;
+}
+
+/* Signup Text Styles */
+.signup-text {
+  text-align: center; /* Center align the signup text */
+  margin-top: 20px; /* Space above the signup text */
+  color: #555; /* Slightly muted text color */
+}
+
+/* Error Message Styles */
+mat-error {
+  color: #f44336; /* Red color for error messages */
+  font-size: 0.9rem; /* Slightly smaller text for error messages */
+}
+
+/* Override only buttons with specific classes or IDs */
+::ng-deep .login-button {
+  color: white;
+  background-color: #8CD867 !important;
+}
+
+::ng-deep .signup-button {
+  color: white;
+  background-color: #8CD867 !important;
+}
+
+/* Keyframes for Animations */
+
+/* Fade-in Animation for the Form */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ripple Animation for Button Click */
+@keyframes ripple {
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+

@@ -1,0 +1,37 @@
+<div class="profile-container">
+  <div class="profile-content">
+    <div *ngIf="user" class="profile-header">
+      <mat-icon class="profile-icon">account_circle</mat-icon>
+    </div>
+    <div *ngIf="user" class="profile-name">
+      <p><strong>Nombre:</strong> {{ user.name }}</p>
+      <p><strong>Correo:</strong> {{ user.email }}</p>
+      <p><strong>Rol:</strong> {{ getRoleDescription(user.roleType) }}</p>
+    </div>
+    <mat-expansion-panel [expanded]="isEditing">
+      <mat-expansion-panel-header (click)="startEditing()">
+        <mat-panel-title>
+          Editar información
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngIf="user">
+        <form (ngSubmit)="onSubmit()">
+          <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input matInput [(ngModel)]="user.name" name="name">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Correo</mat-label>
+            <input matInput [(ngModel)]="user.email" name="email">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+            <input matInput [(ngModel)]="newPassword" name="password" type="password">
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!isFormValid()">Guardar</button>
+          <button mat-raised-button color="warn" type="button" (click)="onCancel()">Cancelar</button>
+        </form>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+<h2 class="title">Room details</h2>
+<div *ngIf="room" class="room-detail-container">
+  <div class="room-detail-section">
+    <mat-card class="room-detail-card">
+      <mat-card-header class="room-detail-card-header">
+        <mat-card-title>{{ room.roomName }}</mat-card-title>
+        <mat-card-subtitle>Creator: {{ room.creator.name }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="room.sportSpace.imageUrl" alt="{{ room.sportSpace.name }}">
+      <mat-card-content class="room-detail-card-content">
+        <p><strong>Sport Space:</strong> {{ room.sportSpace.name }}</p>
+        <p><strong>Opening Date:</strong> {{ formatDate(room.openingDate) }}</p>
+        <p><strong>District:</strong> {{ room.sportSpace.district }}</p>
+        <p><strong>Price:</strong> {{ room.sportSpace.price }}</p>
+        <p><strong>Advance per person:</strong> {{ room.sportSpace.amount }}</p>
+        <p><strong>Sport:</strong> {{ getSportName(room.sportSpace.sportId) }}</p>
+        <p><strong>Game Mode:</strong> {{ getSportGamemode(room.sportSpace.gamemode) }}</p>
+        <p><strong>Players:</strong> {{ room.playerLists.length }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Sección de jugadores y chat -->
+  <div class="players-chat-section">
+    <mat-card class="room-detail-card">
+      <mat-card-header class="room-detail-card-header">
+        <mat-card-title>Players</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="room-detail-card-content">
+        <ul>
+          <div *ngFor="let player of players" class="player-list-item">
+            <mat-icon>check</mat-icon>
+            {{ player.name }}
+          </div>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="room-detail-card room-detail-chat">
+      <mat-card-header class="room-detail-card-header">
+        <mat-card-title>Chat</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="room-detail-card-content">
+        <div class="chat-input">
+          <mat-form-field>
+            <input matInput placeholder="Type your message" [(ngModel)]="newMessage">
+          </mat-form-field>
+          <button mat-button (click)="sendMessage()">Send</button>
+        </div>
+        <div class="chat-messages" *ngFor="let message of messages">
+          <p><strong>{{ message.user.name }}:</strong> {{ message.content }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

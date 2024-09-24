@@ -1,0 +1,175 @@
+/* Título de suscripción con animación */
+
+body{
+  background-color: #fff;
+}
+
+
+.subscription-title {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Righteous', cursive;
+  color: #1B3022;
+  animation: pulse 1.5s infinite, color-change 0.8s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.6); }
+  50% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes color-change {
+  0% { color: #A5D6A7; }
+  25% { color: #81C784; }
+  50% { color: #66BB6A; }
+  75% { color: #388E3C; }
+  100% { color: #1B3022; }
+}
+
+/* Estilos generales para los tabs de suscripción */
+.subscription-tabs {
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+/* Contenido dentro de cada tab */
+.tab-content {
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Títulos dentro de las tabs */
+::ng-deep .tab-content h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1B3022; /* Default color */
+}
+
+/* Sobrescribir colores específicos para cada tab */
+::ng-deep .mat-tab-label[aria-label="Free"] {
+  color: #4CAF50 !important; /* Verde para el plan Free */
+}
+
+::ng-deep .mat-tab-label[aria-label="Bronze"] {
+  color: #CD7F32 !important; /* Bronce para el plan Bronze */
+}
+
+::ng-deep .mat-tab-label[aria-label="Silver"] {
+  color: #C0C0C0 !important; /* Plata para el plan Silver */
+}
+
+::ng-deep .mat-tab-label[aria-label="Gold"] {
+  color: #FFD700 !important; /* Oro para el plan Gold */
+}
+
+/* Colores específicos dentro de cada plan (contenido de las tabs) */
+::ng-deep mat-tab-body[aria-labelledby="mat-tab-label-0-0"] h2 {
+  color: #4CAF50 !important; /* Verde para Free */
+}
+
+::ng-deep mat-tab-body[aria-labelledby="mat-tab-label-0-1"] h2 {
+  color: #CD7F32 !important; /* Bronce para Bronze */
+}
+
+::ng-deep mat-tab-body[aria-labelledby="mat-tab-label-0-2"] h2 {
+  color: #C0C0C0 !important; /* Plata para Silver */
+}
+
+::ng-deep mat-tab-body[aria-labelledby="mat-tab-label-0-3"] h2 {
+  color: #FFD700 !important; /* Oro para Gold */
+}
+
+/* Precio de cada plan */
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-bottom: 10px;
+}
+
+/* Lista de características del plan */
+.tab-content ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.tab-content ul li {
+  margin: 10px 0;
+}
+
+/* Botón de actualización de suscripción */
+button[mat-icon-button] {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 50%;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+button[mat-icon-button]:hover {
+  background-color: #388E3C;
+  transform: scale(1.1);
+}
+
+mat-icon {
+  font-size: 24px;
+}
+
+/* Mensaje de plan actual */
+.current-plan {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #1B3022;
+  margin-top: 10px;
+}
+
+/* Cambiar color de las etiquetas de los tabs (inactivos) */
+::ng-deep .mat-tab-label {
+  background-color: #f5f5f5 !important; /* Fondo de los tabs inactivos */
+  color: #666666 !important; /* Texto de los tabs inactivos */
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Cambiar color de la etiqueta del tab activo */
+::ng-deep .mat-tab-label.mat-tab-label-active {
+  background-color: #4CAF50 !important; /* Fondo del tab activo */
+  color: white !important; /* Texto del tab activo */
+}
+
+/* Cambiar color del borde inferior del tab activo */
+::ng-deep .mat-tab-label-active {
+  border-bottom: 3px solid #1B3022 !important; /* Borde inferior del tab activo */
+}
+
+/* Color de fondo del tab seleccionado */
+::ng-deep .mat-tab-body-content {
+  background-color: #E8F5E9 !important; /* Fondo verde claro para el contenido del tab seleccionado */
+}
+
+/* Cambiar color de la barra indicadora de selección (underline) */
+::ng-deep .mat-tab-group .mat-ink-bar {
+  background-color: #1B3022 !important; /* Color de la barra indicadora (underline) */
+}
+
+/* Hover sobre los tabs */
+::ng-deep .mat-tab-label:hover {
+  background-color: #e0e0e0 !important; /* Fondo del tab cuando se hace hover */
+  color: #333 !important; /* Color del texto cuando se hace hover */
+}
+
+/* Cambiar el color de la barra de pestañas */
+::ng-deep .mat-tab-group {
+  background-color: #f5f5f5 !important; /* Fondo de la barra de tabs */
+}
+
+/* Color de la pestaña inactiva */
+::ng-deep .mat-tab-group .mat-tab-label {
+  color: #4CAF50 !important; /* Texto de tabs inactivos */
+}
+

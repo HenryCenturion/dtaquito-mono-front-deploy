@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Recargar Créditos</h1>
+<form [formGroup]="depositForm">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Monto</mat-label>
+      <input matInput formControlName="amount" type="number">
+      <mat-error *ngIf="depositForm.get('amount')?.hasError('min')">
+        El monto debe ser mayor que 0
+      </mat-error>
+      <mat-error *ngIf="depositForm.get('amount')?.hasError('required')">
+        El monto es requerido
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    <button mat-button type="button" (click)="onDeposit()" [disabled]="!depositForm.valid">
+      Recargar
+    </button>
+  </div>
+</form>

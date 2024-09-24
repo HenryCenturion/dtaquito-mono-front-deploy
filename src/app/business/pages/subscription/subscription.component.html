@@ -1,0 +1,80 @@
+<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+<body>
+<!-- Título con animación -->
+<h1 class="subscription-title">
+  <span *ngIf="currentSubscription === 1">Free plan</span>
+  <span *ngIf="currentSubscription === 2">Bronze plan</span>
+  <span *ngIf="currentSubscription === 3">Silver plan</span>
+  <span *ngIf="currentSubscription === 4">Gold plan</span>
+</h1>
+
+<!-- Contenedor de pestañas -->
+<mat-tab-group class="subscription-tabs">
+  <!-- Free Plan Tab -->
+  <mat-tab label="Free">
+    <div class="tab-content">
+      <h2>FREE PLAN</h2>
+      <p class="price">Free</p>
+      <ul>
+        <li><mat-icon>check</mat-icon> Basic features for managing sports spaces</li>
+        <li><mat-icon>check</mat-icon> Visibility in the public listings</li>
+      </ul>
+      <div *ngIf="currentSubscription === 1" class="current-plan">This is your plan</div>
+    </div>
+  </mat-tab>
+
+  <!-- Bronze Plan Tab -->
+  <mat-tab label="Bronze">
+    <div class="tab-content">
+      <h2>BRONZE PLAN</h2>
+      <p class="price">$4.99/month</p>
+      <ul>
+        <li><mat-icon>check</mat-icon> Add 1 sports space</li>
+        <li><mat-icon>check</mat-icon> Personalization of your sports spaces</li>
+        <li><mat-icon>check</mat-icon> Greater visibility of your sports spaces</li>
+        <li><mat-icon>check</mat-icon> 24-hour customer service</li>
+      </ul>
+      <button mat-icon-button *ngIf="currentSubscription < 2" (click)="updateSubscription('bronze')">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+      <div *ngIf="currentSubscription === 2" class="current-plan">This is your plan</div>
+    </div>
+  </mat-tab>
+
+  <!-- Silver Plan Tab -->
+  <mat-tab label="Silver">
+    <div class="tab-content">
+      <h2>SILVER PLAN</h2>
+      <p class="price">$9.99/month</p>
+      <ul>
+        <li><mat-icon>check</mat-icon> Add 2 sports spaces</li>
+        <li><mat-icon>check</mat-icon> Personalization of your sports spaces</li>
+        <li><mat-icon>check</mat-icon> Greater visibility of your sports spaces</li>
+        <li><mat-icon>check</mat-icon> 24-hour customer service</li>
+      </ul>
+      <button mat-icon-button *ngIf="currentSubscription < 3" (click)="updateSubscription('silver')">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+      <div *ngIf="currentSubscription === 3" class="current-plan">This is your plan</div>
+    </div>
+  </mat-tab>
+
+  <!-- Gold Plan Tab -->
+  <mat-tab label="Gold">
+    <div class="tab-content">
+      <h2>GOLD PLAN</h2>
+      <p class="price">$14.99/month</p>
+      <ul>
+        <li><mat-icon>check</mat-icon> Add 3 sports spaces</li>
+        <li><mat-icon>check</mat-icon> Personalization of your sports spaces</li>
+        <li><mat-icon>check</mat-icon> Greater visibility of your sports spaces</li>
+        <li><mat-icon>check</mat-icon> 24-hour customer service</li>
+      </ul>
+      <button mat-icon-button *ngIf="currentSubscription < 4" (click)="updateSubscription('gold')">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+      <div *ngIf="currentSubscription === 4" class="current-plan">This is your plan</div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+</body>
