@@ -93,7 +93,7 @@ export class ProfileComponent implements OnInit {
   }
 
   isFormValid(): boolean {
-    return !!(this.user?.name && this.user?.email && this.newPassword);
+    return !!(this.user?.name && this.user?.email);
   }
 
   startEditing(): void {

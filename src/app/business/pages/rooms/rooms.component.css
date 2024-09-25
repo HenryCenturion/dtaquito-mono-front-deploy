@@ -81,19 +81,17 @@ body {
 }
 
 .advance-tag {
-  position: absolute; /* Posicionarlo de forma absoluta */
-  top: 20px; /* Ajusta la distancia desde la parte superior */
-  right: 20px; /* Ajusta la distancia desde el lado derecho */
-  background-color: rgba(255, 0, 0, 0.8); /* Color de fondo (puedes cambiarlo si lo deseas) */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(255, 0, 0, 0.8);
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
   font-weight: bold;
-  font-size: 1.2rem; /* Tamaño de fuente más grande */
-  z-index: 1; /* Asegúrate de que esté por encima de otros elementos */
+  font-size: 1.2rem;
+  z-index: 1;
 }
-
-
 
 mat-card.room-card:hover {
   transform: scale(1.05);
@@ -218,7 +216,22 @@ button.clear-filters:hover {
 
 @media (max-width: 768px) {
   .rooms-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+  }
+
+  .room-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .room-card img {
+    width: 100%;
+  }
+
+  .room-card-content {
+    width: 100%;
+    padding-left: 0;
+    margin-top: 20px;
   }
 }
 
@@ -226,52 +239,64 @@ button.clear-filters:hover {
   .rooms-container {
     grid-template-columns: 1fr;
   }
+
+  .room-card {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .advance-tag, .price-tag {
+    font-size: 1rem;
+    padding: 3px 7px;
+  }
 }
 
-/* Estilos para los botones de Join y View Room */
 button.join-button, button.view-room-button {
-  background-color: #28a745; /* Color de fondo verde */
-  color: white; /* Color del texto */
-  border: none; /* Sin borde */
-  padding: 10px 20px; /* Espaciado interno */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cursor de puntero */
-  transition: background-color 0.3s, transform 0.3s; /* Transiciones */
-  font-size: 1rem; /* Tamaño de fuente */
-  font-weight: bold; /* Texto en negrita */
-  margin: 5px; /* Margen */
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 5px;
 }
 
 button.join-button:hover, button.view-room-button:hover {
-  background-color: #218838; /* Color de fondo al pasar el ratón */
-  transform: scale(1.05); /* Escala al pasar el ratón */
+  background-color: #218838;
+  transform: scale(1.05);
 }
 
 button.join-button:active, button.view-room-button:active {
-  background-color: #1e7e34; /* Color de fondo al hacer clic */
-  transform: scale(1); /* Escala al hacer clic */
+  background-color: #1e7e34;
+  transform: scale(1);
 }
 
-/* Estilos para el botón de View Room cuando el usuario ya pertenece a la sala */
 button.view-room-button.golden {
-  background-color: gold; /* Color de fondo dorado */
-  color: black; /* Color del texto */
-  border: none; /* Sin borde */
-  padding: 10px 20px; /* Espaciado interno */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cursor de puntero */
-  transition: background-color 0.3s, transform 0.3s; /* Transiciones */
-  font-size: 1rem; /* Tamaño de fuente */
-  font-weight: bold; /* Texto en negrita */
-  margin: 5px; /* Margen */
+  background-color: gold;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 5px;
 }
 
 button.view-room-button.golden:hover {
-  background-color: darkgoldenrod; /* Color de fondo al pasar el ratón */
-  transform: scale(1.05); /* Escala al pasar el ratón */
+  background-color: darkgoldenrod;
+  transform: scale(1.05);
 }
 
 button.view-room-button.golden:active {
-  background-color: goldenrod; /* Color de fondo al hacer clic */
-  transform: scale(1); /* Escala al hacer clic */
+  background-color: goldenrod;
+  transform: scale(1);
 }

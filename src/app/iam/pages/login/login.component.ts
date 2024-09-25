@@ -37,6 +37,7 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe(
         success => {
           this.router.navigate(['/home']);
+          setTimeout(() => window.location.reload(), 700);
         },
         error => {
         }

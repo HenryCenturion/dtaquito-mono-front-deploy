@@ -1,5 +1,5 @@
 <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-<body>
+
 <!-- Título con animación -->
 <h1 class="subscription-title">
   <span *ngIf="currentSubscription === 1">Free plan</span>
@@ -15,10 +15,6 @@
     <div class="tab-content">
       <h2>FREE PLAN</h2>
       <p class="price">Free</p>
-      <ul>
-        <li><mat-icon>check</mat-icon> Basic features for managing sports spaces</li>
-        <li><mat-icon>check</mat-icon> Visibility in the public listings</li>
-      </ul>
       <div *ngIf="currentSubscription === 1" class="current-plan">This is your plan</div>
     </div>
   </mat-tab>
@@ -34,7 +30,7 @@
         <li><mat-icon>check</mat-icon> Greater visibility of your sports spaces</li>
         <li><mat-icon>check</mat-icon> 24-hour customer service</li>
       </ul>
-      <button mat-icon-button *ngIf="currentSubscription < 2" (click)="updateSubscription('bronze')">
+      <button mat-icon-button *ngIf="currentSubscription < 2" (click)="updateSubscription('bronce')">
         <mat-icon>shopping_cart</mat-icon>
       </button>
       <div *ngIf="currentSubscription === 2" class="current-plan">This is your plan</div>
@@ -52,7 +48,7 @@
         <li><mat-icon>check</mat-icon> Greater visibility of your sports spaces</li>
         <li><mat-icon>check</mat-icon> 24-hour customer service</li>
       </ul>
-      <button mat-icon-button *ngIf="currentSubscription < 3" (click)="updateSubscription('silver')">
+      <button mat-icon-button *ngIf="currentSubscription < 3" (click)="updateSubscription('plata')">
         <mat-icon>shopping_cart</mat-icon>
       </button>
       <div *ngIf="currentSubscription === 3" class="current-plan">This is your plan</div>
@@ -70,11 +66,10 @@
         <li><mat-icon>check</mat-icon> Greater visibility of your sports spaces</li>
         <li><mat-icon>check</mat-icon> 24-hour customer service</li>
       </ul>
-      <button mat-icon-button *ngIf="currentSubscription < 4" (click)="updateSubscription('gold')">
+      <button mat-icon-button *ngIf="currentSubscription < 4" (click)="updateSubscription('oro')">
         <mat-icon>shopping_cart</mat-icon>
       </button>
       <div *ngIf="currentSubscription === 4" class="current-plan">This is your plan</div>
     </div>
   </mat-tab>
 </mat-tab-group>
-</body>

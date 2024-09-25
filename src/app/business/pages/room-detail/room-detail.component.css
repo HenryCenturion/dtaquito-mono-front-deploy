@@ -24,86 +24,120 @@
 
 .room-detail-container {
   background-color: white;
-  display: flex; /* Usamos Flexbox para el layout */
-  justify-content: space-between; /* Espacio entre las columnas */
-  margin: 20px; /* Margen general */
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
 }
 
 .room-detail-section {
-  flex: 2; /* Toma más espacio en la pantalla */
-  margin-right: 20px; /* Espacio entre las secciones */
-  background-color: white; /* Fondo blanco para los detalles */
-  padding: 20px; /* Espaciado interno */
-  border-radius: 10px; /* Esquinas redondeadas */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  flex: 2;
+  margin-right: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 300px; /* Asegura un tamaño mínimo */
 }
 
 .players-chat-section {
-  flex: 1; /* Toma menos espacio en la pantalla */
+  flex: 1;
   display: flex;
-  flex-direction: column; /* Coloca los jugadores y el chat uno encima del otro */
-  background-color: white; /* Fondo blanco para los jugadores y el chat */
-  padding: 20px; /* Espaciado interno */
-  border-radius: 10px; /* Esquinas redondeadas */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 300px; /* Asegura un tamaño mínimo */
 }
 
 .room-detail-card {
-  margin-bottom: 20px; /* Espacio entre las tarjetas */
+  margin-bottom: 20px;
   background-color: white;
 }
 
 .room-detail-chat {
-  flex-grow: 1; /* El chat ocupará el espacio restante */
+  flex-grow: 1;
 }
 
 .room-detail-card img {
-  height: 500px; /* Ajusta la altura de la imagen */
+  height: 500px;
   object-fit: cover;
-  border-radius: 15px; /* Bordes redondeados */
-  margin: 10px; /* Margen alrededor de la imagen */
+  border-radius: 15px;
+  margin: 10px;
 }
 
 .chat-messages {
-  max-height: 300px; /* Altura máxima para el área de chat */
-  overflow-y: auto; /* Habilitar desplazamiento si es necesario */
-  margin-bottom: 10px; /* Margen inferior para el área de mensajes */
-  background-color: white; /* Fondo blanco para el área de chat */
-  padding: 10px; /* Espaciado interno */
-  border-radius: 10px; /* Esquinas redondeadas */
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-/* Estilo opcional para el botón */
 button {
-  margin-top: 10px; /* Margen superior para el botón enviar */
+  margin-top: 10px;
 }
 
 .chat-input {
   display: flex;
   align-items: center;
-  margin-top: 10px; /* Margen superior para el área de entrada */
+  margin-top: 10px;
 }
 
 .chat-input mat-form-field {
-  flex-grow: 1; /* Permite que el campo de entrada crezca */
-  margin-right: 10px; /* Espacio entre el campo de entrada y el botón */
+  flex-grow: 1;
+  margin-right: 10px;
 }
 
 .chat-input input {
-  border-radius: 5px; /* Bordes redondeados */
-  border: 1px solid #ccc; /* Borde del campo de entrada */
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .chat-input button {
-  background-color: #007bff; /* Color de fondo del botón */
-  color: white; /* Color del texto del botón */
-  border: none; /* Sin borde */
-  padding: 10px 20px; /* Espaciado interno */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cursor de puntero */
-  transition: background-color 0.3s; /* Transición suave para el color de fondo */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .chat-input button:hover {
-  background-color: #0056b3; /* Color de fondo al pasar el cursor */
+  background-color: #0056b3;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .room-detail-container {
+    flex-direction: column; /* Coloca las secciones una debajo de la otra */
+  }
+
+  .room-detail-section,
+  .players-chat-section {
+    margin-right: 0;
+    margin-bottom: 20px; /* Espacio entre las secciones */
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .room-detail-section,
+  .players-chat-section {
+    padding: 15px;
+  }
+
+  .chat-input button {
+    padding: 8px 16px;
+  }
 }

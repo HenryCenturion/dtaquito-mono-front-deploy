@@ -112,23 +112,23 @@ export class RoomDetailComponent implements OnInit {
 
 
   getPlayerList(): void {
-  const roomId = this.route.snapshot.paramMap.get('id');
-  if (roomId) {
-    this.roomService.getPlayerList(+roomId).subscribe(
-      (playerIds: any[]) => {
-        this.players = [];
-        playerIds.forEach(player => {
-          const playerId = player.userId;
-          this.userService.getUserById(playerId).subscribe(
-            (user: any) => {
-              this.players.push(user);
-            }
-          );
-        });
-      }
-    );
+    const roomId = this.route.snapshot.paramMap.get('id');
+    if (roomId) {
+      this.roomService.getPlayerList(+roomId).subscribe(
+        (playerIds: any[]) => {
+          this.players = [];
+          playerIds.forEach(player => {
+            const playerId = player.userId;
+            this.userService.getUserById(playerId).subscribe(
+              (user: any) => {
+                this.players.push(user);
+              }
+            );
+          });
+        }
+      );
+    }
   }
-}
   getSportName(sportId: number): string {
     switch (sportId) {
       case 1:
@@ -169,6 +169,7 @@ export class RoomDetailComponent implements OnInit {
         (response: any) => {
           this.messages.push(response);
           this.newMessage = '';
+          window.location.reload();
         },
         (error: any) => {
           console.error('Error sending message', error);

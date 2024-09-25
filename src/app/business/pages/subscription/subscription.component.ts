@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { MatTab, MatTabGroup } from "@angular/material/tabs";
 import { MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
@@ -53,6 +53,7 @@ export class SubscriptionComponent implements OnInit {
   updateSubscription(plan: string): void {
     const userId = this.getUserIdFromLocalStorage();
     if (userId) {
+      console.log('Updating subscription for user: ', userId, plan);
       this.subscriptionService.updateSubscription(userId, plan);
     }
   }

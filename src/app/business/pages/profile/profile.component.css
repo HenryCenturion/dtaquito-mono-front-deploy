@@ -23,10 +23,26 @@
   margin-bottom: 10px;
 }
 
-.profile-icon {
-  font-size: 50px;
-}
-
 .profile-name {
   margin-bottom: 10px;
+  text-align: center;
+}
+
+.profile-name p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+mat-expansion-panel {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+button {
+  margin: 5px;
 }

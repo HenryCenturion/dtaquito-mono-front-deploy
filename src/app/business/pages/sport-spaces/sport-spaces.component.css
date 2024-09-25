@@ -1,4 +1,4 @@
-body{
+body {
   background-color: #FFFBDB;
 }
 
@@ -53,7 +53,7 @@ mat-card {
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border: 2px solid darkslategray;
-  background-color: white ;
+  background-color: white;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -176,10 +176,33 @@ button.clear-filters:hover {
   .card-container {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  mat-card {
+    max-width: 100%;
+    max-height: 100%;
+  }
 }
 
 @media (max-width: 480px) {
   .card-container {
     grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  mat-card {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .price-tag {
+    font-size: 1rem;
+    padding: 3px 7px;
   }
 }
