@@ -20,6 +20,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
+import confetti from 'canvas-confetti';
 
 
 
@@ -68,10 +69,12 @@ export class SportSpacesComponent implements OnInit {
     { id: 2, name: 'Billiards' }
   ];
   districts = [
-    'Cercado de Lima', 'San Isidro', 'Miraflores', 'San Borja', 'Surco',
-    'La Molina', 'San Miguel', 'Magdalena', 'Pueblo Libre', 'Lince',
-    'Jesus Maria', 'Barranco', 'Chorrillos', 'San Juan de Lurigancho',
-    'San Juan de Miraflores', 'Villa El Salvador', 'Villa Maria del Triunfo'
+    'Ancón', 'Ate', 'Barranco', 'Breña', 'Carabayllo', 'Chaclacayo', 'Chorrillos', 'Cieneguilla', 'Comas', 'El Agustino',
+    'Independencia', 'Jesús María', 'La Molina', 'La Victoria', 'Lima', 'Lince', 'Los Olivos', 'Lurigancho', 'Lurín',
+    'Magdalena del Mar', 'Miraflores', 'Pachacámac', 'Pucusana', 'Pueblo Libre', 'Puente Piedra', 'Punta Hermosa',
+    'Punta Negra', 'Rímac', 'San Bartolo', 'San Borja', 'San Isidro', 'San Juan de Lurigancho', 'San Juan de Miraflores',
+    'San Luis', 'San Martín de Porres', 'San Miguel', 'Santa Anita', 'Santa María del Mar', 'Santa Rosa', 'Santiago de Surco',
+    'Surquillo', 'Villa El Salvador', 'Villa María del Triunfo'
   ];
   gamemodes: string[] = [];
 
@@ -202,5 +205,17 @@ export class SportSpacesComponent implements OnInit {
     } else {
       this.gamemodes = [];
     }
+  }
+
+  celebrate() {
+    const duration = 6300;
+
+    confetti({
+      particleCount: 100,
+      spread: 160,
+      origin: { y: 0.37 },
+    });
+
+    setTimeout(() => confetti.reset(), duration);
   }
 }

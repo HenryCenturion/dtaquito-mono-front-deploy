@@ -1,3 +1,26 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.chat-input button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 0;
+}
+
+.chat-input button::before {
+  content: 'send';
+  font-family: 'Material Icons';
+  font-size: 24px;
+}
+
+.chat-input button:hover {
+  background-color: #0056b3;
+}
+
 .title {
   margin-top: 20px;
   font-size: 3rem;
@@ -17,7 +40,7 @@
 }
 
 .logged-in-user-name {
-  background-color: #e0f7fa; /* Color de fondo diferente */
+  background-color: #e0f7fa;
   padding: 5px;
   border-radius: 5px;
 }
@@ -41,7 +64,7 @@
   display: flex;
   justify-content: space-between;
   margin: 20px;
-  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+  flex-wrap: wrap;
 }
 
 .room-detail-section {
@@ -51,7 +74,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 300px; /* Asegura un tamaño mínimo */
+  min-width: 300px;
 }
 
 .players-chat-section {
@@ -62,7 +85,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 300px; /* Asegura un tamaño mínimo */
+  min-width: 300px;
 }
 
 .room-detail-card {
@@ -82,8 +105,8 @@
 }
 
 .chat-messages {
-  max-height: 500px; /* Altura máxima de la sección de chat */
-  overflow-y: auto; /* Habilitar barra de desplazamiento vertical */
+  max-height: 500px;
+  overflow-y: auto;
   margin-bottom: 10px;
   background-color: white;
   padding: 10px;
@@ -166,19 +189,35 @@ button {
   font-size: 0.8rem;
   color: #888;
   text-align: right;
-  margin-left: 10px; /* Espacio entre el mensaje y la marca de tiempo */
+  margin-left: 10px;
 }
 
-/* Estilos responsivos */
+@media (max-width: 875px) {
+  .chat-input button {
+    padding: 10px;
+    font-size: 0;
+  }
+
+  .chat-input button::before {
+    content: 'send';
+    font-family: 'Material Icons';
+    font-size: 24px;
+  }
+}
+
 @media (max-width: 768px) {
   .room-detail-container {
-    flex-direction: column; /* Coloca las secciones una debajo de la otra */
+    flex-direction: column;
   }
 
   .room-detail-section,
   .players-chat-section {
+    flex: 1;
     margin-right: 0;
-    margin-bottom: 20px; /* Espacio entre las secciones */
+    margin-bottom: 20px;
+    padding: 10px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .title {

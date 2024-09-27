@@ -56,11 +56,7 @@ export class RoomDetailComponent implements OnInit {
     private userService: UserService
   ) {}
 
-  ngAfterViewChecked(): void {
-    this.scrollToBottom();
-  }
-
-  private scrollToBottom(): void {
+  scrollToBottom(): void {
     if (this.lastMessage) {
       this.lastMessage.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
@@ -207,7 +203,8 @@ export class RoomDetailComponent implements OnInit {
     return format(zonedDate, 'dd/MM/yyyy, HH:mm:ss', { timeZone });
   }
 
-  sendMessage(): void {
+  sendMessage(event: Event): void {
+    event.stopPropagation();
     const roomId = this.route.snapshot.paramMap.get('id');
     if (roomId && this.newMessage.trim() && this.userData) {
       this.roomService.sendMessage(+roomId, this.newMessage, this.userData.id).subscribe(

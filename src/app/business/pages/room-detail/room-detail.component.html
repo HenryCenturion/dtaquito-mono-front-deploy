@@ -42,8 +42,8 @@
       </mat-card-header>
       <mat-card-content class="room-detail-card-content">
         <div class="chat-input">
-          <input type="text" placeholder="Type your message" [(ngModel)]="newMessage" class="custom-input" (keydown.enter)="sendMessage()">
-          <button (click)="sendMessage()" class="custom-button">Send</button>
+          <input type="text" placeholder="Type your message" [(ngModel)]="newMessage" class="custom-input" (click)="scrollToBottom()" (keydown.enter)="sendMessage($event)">
+          <button (click)="sendMessage($event)" class="custom-button">Send</button>
         </div>
         <div class="chat-messages">
           <div *ngFor="let message of messages; let last = last">

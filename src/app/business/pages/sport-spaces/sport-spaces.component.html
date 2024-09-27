@@ -35,7 +35,7 @@
   <button class="clear-filters" (click)="clearFilters()">Clear Filters</button>
 </div>
 
-<button *ngIf="dataOwner && canAddMoreSportSpaces" mat-flat-button (click)="addSportSpace()">Add sport space</button>
+<button *ngIf="dataOwner && canAddMoreSportSpaces" class="custom-add-button" (click)="addSportSpace()" (mouseover)="celebrate()">Add sport space</button>
 <p *ngIf="dataOwner && userSubscriptionData.planType === 'free'" class="subscription-message">
   Purchase a subscription to add your sport spaces.
 </p>
@@ -59,6 +59,7 @@
     <img [src]="sportSpace.imageUrl">
     <mat-card-content>
       <p>Gamemode: {{ sportSpace.gamemode }}</p>
+      <p>Advance per person: $ {{ sportSpace.amount }}</p>
       <p>Schedule: {{ sportSpace.StartTime }} to {{ sportSpace.endTime }}</p>
     </mat-card-content>
   </mat-card>

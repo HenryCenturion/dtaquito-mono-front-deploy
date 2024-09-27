@@ -8,16 +8,17 @@ import {SubscriptionComponent} from "./business/pages/subscription/subscription.
 import {RoomsComponent} from "./business/pages/rooms/rooms.component";
 import {ProfileComponent} from "./business/pages/profile/profile.component";
 import {RoomDetailComponent} from "./business/pages/room-detail/room-detail.component";
+import {AuthGuard} from "./shared/services/auth.guard";
 
 export const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'sport-spaces', component: SportSpacesComponent},
-  {path: 'subscriptions', component: SubscriptionComponent},
-  {path: 'rooms', component: RoomsComponent},
-  {path: 'room-detail/:id', component: RoomDetailComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: '**', component:PageNotFoundComponent}
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'sport-spaces', component: SportSpacesComponent, canActivate: [AuthGuard] },
+  { path: 'subscriptions', component: SubscriptionComponent, canActivate: [AuthGuard] },
+  { path: 'rooms', component: RoomsComponent, canActivate: [AuthGuard] },
+  { path: 'room-detail/:id', component: RoomDetailComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];

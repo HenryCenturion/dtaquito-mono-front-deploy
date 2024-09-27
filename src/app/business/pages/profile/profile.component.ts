@@ -65,7 +65,7 @@ export class ProfileComponent implements OnInit {
       case 'R':
         return 'Player';
       case 'P':
-        return 'Propietario';
+        return 'Owner';
       default:
         return 'Unknown Role';
     }
@@ -93,7 +93,7 @@ export class ProfileComponent implements OnInit {
   }
 
   isFormValid(): boolean {
-    return !!(this.user?.name && this.user?.email);
+    return !!(this.user?.name && this.user?.email && this.newPassword);
   }
 
   startEditing(): void {

@@ -1,30 +1,48 @@
-body {
-  background-color: #FFFBDB;
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.chat-input button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 0;
 }
 
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 20px;
-  padding: 0 10px; /* Añadir padding para evitar que se peguen al borde */
+.chat-input button::before {
+  content: 'send';
+  font-family: 'Material Icons';
+  font-size: 24px;
 }
 
-.example-card {
-  padding: 16px;
-  box-sizing: border-box;
-  overflow: hidden;
-  margin: 0 auto; /* Centrar las tarjetas horizontalmente */
+.chat-input button:hover {
+  background-color: #0056b3;
 }
 
 .title {
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 3rem;
   text-align: center;
   font-family: 'Righteous', cursive;
   color: #1B3022;
   animation: pulse 1.5s infinite, color-change 0.8s infinite alternate;
   transform-origin: center;
+}
+
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.logged-in-user-name {
+  background-color: #e0f7fa;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 @keyframes pulse {
@@ -41,50 +59,190 @@ body {
   100% { color: #1B3022; }
 }
 
-mat-card {
+.room-detail-container {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+
+.room-detail-section {
+  flex: 7;
+  margin-right: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 300px;
+}
+
+.players-chat-section {
+  flex: 6;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  margin: 20px;
-  padding: 20px;
-  width: 100%;
-  height: 100%;
-  max-width: 500px;
-  max-height: 600px;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid darkslategray;
   background-color: white;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 300px;
 }
 
-mat-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+.room-detail-card {
+  margin-bottom: 20px;
+  background-color: white;
 }
 
-.price-tag {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(255, 0, 0, 0.8);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-weight: bold;
+.room-detail-chat {
+  flex-grow: 1;
+}
+
+.room-detail-card img {
+  height: 500px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin: 10px;
+}
+
+.chat-messages {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.chat-input {
   display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.custom-input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.custom-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.custom-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.custom-button:hover {
+  background-color: #0056b3;
+}
+
+.chat-input mat-form-field {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.chat-input input {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.chat-input button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+  background-color: #0056b3;
+}
+
+.chat-message {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-mat-card img {
-  margin-top: 15px;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  object-fit: cover;
+.message-content {
   flex-grow: 1;
+}
+
+.message-timestamp {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: right;
+  margin-left: 10px;
+}
+
+@media (max-width: 875px) {
+  .chat-input button {
+    padding: 10px;
+    font-size: 0;
+  }
+
+  .chat-input button::before {
+    content: 'send';
+    font-family: 'Material Icons';
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .room-detail-container {
+    flex-direction: column;
+  }
+
+  .room-detail-section,
+  .players-chat-section {
+    flex: 1;
+    margin-right: 0;
+    margin-bottom: 20px;
+    padding: 10px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .room-detail-section,
+  .players-chat-section {
+    padding: 15px;
+  }
+
+  .chat-input button {
+    padding: 8px 16px;
+  }
+}
+
+mat-card.room-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 mat-card-header {
@@ -113,38 +271,77 @@ mat-icon {
   margin-right: 4px;
 }
 
+.edit-button,
+button.clear-filters,
+button.crete-room,
+button.join-button,
+button.view-room-button {
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 5px;
+}
+
 .edit-button {
   background-color: #007bff;
   color: white;
-  position: relative;
-  margin-right: 80px;
-  border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
 }
 
 .edit-button:hover {
   background-color: #0056b3;
 }
 
-mat-card-content {
-  margin: 10px 0;
-  text-align: left;
-}
-
-button {
-  border: none;
-  border-radius: 3px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-button:hover {
+button.clear-filters {
   background-color: #dc3545;
+  color: #fff;
+  height: 56px;
+}
+
+button.clear-filters:hover {
+  background-color: #c82333;
+}
+
+button.crete-room {
+  background-color: dodgerblue;
+  color: #fff;
+  height: 56px;
+}
+
+button.join-button,
+button.view-room-button {
+  background-color: #28a745;
   color: white;
 }
 
-body:hover span {
-  animation: bounce 0.6s;
+button.join-button:hover,
+button.view-room-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+button.join-button:active,
+button.view-room-button:active {
+  background-color: #1e7e34;
+  transform: scale(1);
+}
+
+button.view-room-button.golden {
+  background-color: gold;
+  color: black;
+}
+
+button.view-room-button.golden:hover {
+  background-color: darkgoldenrod;
+  transform: scale(1.05);
+}
+
+button.view-room-button.golden:active {
+  background-color: goldenrod;
+  transform: scale(1);
 }
 
 .filters-container {
@@ -159,56 +356,95 @@ mat-form-field {
   min-width: 120px;
 }
 
-button.clear-filters {
-  background-color: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  height: 56px;
+@media (max-width: 1825px) {
+  .room-card {
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    padding: 15px;
+    max-width: 550px;
+  }
+
+  .room-card img {
+    width: 80%;
+  }
+
+  .room-card-content {
+    max-width: 60%;
+    padding: 20px;
+    margin-top: 20px;
+  }
 }
 
-button.clear-filters:hover {
-  background-color: #c82333;
-}
+@media (max-width: 1200px) {
+  .rooms-container {
+    grid-template-columns: 1fr;
+  }
 
-.subscription-message {
-  background-color: #ffeb3b; /* Fondo amarillo */
-  color: #333; /* Texto oscuro */
-  padding: 15px; /* Espaciado interno */
-  border-radius: 5px; /* Bordes redondeados */
-  text-align: center; /* Centrar el texto */
-  font-size: 1.2rem; /* Tamaño de fuente */
-  font-weight: bold; /* Negrita */
-  margin: 20px 0; /* Espaciado externo */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+  .room-card {
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 10px;
+    padding: 10px;
+    max-width: 800px;
+  }
+
+  .room-card img {
+    width: 50%;
+  }
+
+  .room-card-content {
+    width: 50%;
+    padding-left: 20px;
+    margin-top: 0;
+  }
 }
 
 @media (max-width: 768px) {
-  .card-container {
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-    padding: 0 10px; /* Mantener padding para evitar que se peguen al borde */
+  .rooms-container {
+    gap: 10px;
   }
 
-  .example-card {
-    max-width: 100%;
-    max-height: 100%;
-    margin: 10px auto; /* Centrar las tarjetas horizontalmente */
+  .room-card {
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    max-width: 650px;
+  }
+
+  .room-card img {
+    width: 100%;
+  }
+
+  .room-card-content {
+    width: 100%;
+    padding-left: 0;
+    margin-top: 10px;
   }
 }
 
 @media (max-width: 480px) {
-  .card-container {
-    grid-template-columns: 1fr;
-    justify-content: center;
-    padding: 0 10px; /* Mantener padding para evitar que se peguen al borde */
+  .rooms-container {
+    gap: 5px;
   }
 
-  .example-card {
-    margin: 10px auto; /* Centrar las tarjetas horizontalmente */
-    padding: 10px;
+  .room-card {
+    margin: 5px;
+    padding: 5px;
+  }
+
+  .room-card img {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .advance-tag,
+  .price-tag {
+    font-size: 1rem;
+    padding: 3px 7px;
   }
 }

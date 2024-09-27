@@ -1,77 +1,69 @@
-/* General Styles */
 mat-toolbar {
-  background-color: #4CAF50; /* Green background */
-  color: white; /* White text color for better contrast */
-  font-family: 'Roboto', sans-serif; /* Clean, modern font */
-  padding: 0 16px; /* Padding for the toolbar content */
+  background-color: #4CAF50;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  padding: 0 16px;
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping of content */
+  flex-wrap: wrap;
 }
 
 mat-toolbar a {
-  color: white; /* White color for the links */
-  text-decoration: none; /* Remove underline from links */
-  font-weight: 500; /* Slightly bolder font for the links */
-  margin-right: 20px; /* Spacing between links */
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  margin-right: 20px;
 }
 
 .spacer {
-  flex: 1 1 auto; /* Spacer to push content to the sides */
+  flex: 1 1 auto;
 }
 
-/* Credits Container Styles */
 .credits-container {
   display: flex;
   align-items: center;
-  gap: 6px; /* Spacing between credits content */
+  gap: 6px;
 }
 
 .credits-container span {
-  font-weight: bold; /* Bold text for emphasis */
-  font-size: 16px; /* Fixed font size */
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .credits-container button mat-icon {
   font-size: 24px;
 }
 
-/* Icon Button Styles */
 mat-icon-button {
-  color: white; /* White color for icon buttons */
+  color: white;
 }
 
 mat-icon-button:hover mat-icon {
-  color: #81C784; /* Lighter green on hover */
+  color: #81C784;
 }
 
-
-/* Responsive Styles */
 @media (max-width: 768px) {
   mat-toolbar {
-    flex-direction: row; /* Maintain row layout on mobile */
-    justify-content: space-between; /* Adjust layout */
+    flex-direction: row;
+    justify-content: space-between;
   }
 
-  /* Hide right-side links on mobile */
   mat-toolbar a:not(:first-child):not(.sign-in-button),
   mat-toolbar .spacer:not(:first-child) {
-    display: none; /* Hide other links */
+    display: none;
   }
 
-  /* Mobile menu button visibility */
   .mobile-menu-button {
     display: block;
   }
 
   .credits-container {
     flex-grow: 1;
-    justify-content: center; /* Center-align credits on mobile */
-    display: flex; /* Ensure credits container is visible */
+    justify-content: center;
+    display: flex;
   }
 
   .sign-in-button {
-    display: block; /* Ensure Sign In button is visible */
-    margin-left: auto; /* Align Sign In button to the right */
+    display: block;
+    margin-left: auto;
   }
 }
-
