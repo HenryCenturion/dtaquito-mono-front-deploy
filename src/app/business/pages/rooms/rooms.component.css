@@ -214,47 +214,6 @@ button.clear-filters:hover {
   background-color: #c82333;
 }
 
-@media (max-width: 768px) {
-  .rooms-container {
-    grid-template-columns: 1fr;
-  }
-
-  .room-card {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .room-card img {
-    width: 100%;
-  }
-
-  .room-card-content {
-    width: 100%;
-    padding-left: 0;
-    margin-top: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .rooms-container {
-    grid-template-columns: 1fr;
-  }
-
-  .room-card {
-    margin: 10px;
-    padding: 10px;
-  }
-
-  .title {
-    font-size: 2rem;
-  }
-
-  .advance-tag, .price-tag {
-    font-size: 1rem;
-    padding: 3px 7px;
-  }
-}
-
 button.join-button, button.view-room-button {
   background-color: #28a745;
   color: white;
@@ -299,4 +258,112 @@ button.view-room-button.golden:hover {
 button.view-room-button.golden:active {
   background-color: goldenrod;
   transform: scale(1);
+}
+
+@media (max-width: 1825px) {
+  .rooms-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-items: center;
+  }
+
+  .room-card-content {
+    max-width: 60%;
+    padding: 20px;
+    margin-top: 20px;
+    justify-items: center;
+  }
+
+  .room-card {
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    padding: 15px;
+    width: 100%; /* Asegura que la tarjeta ocupe todo el ancho disponible */
+    max-width: 550px; /* Limita el ancho máximo de la tarjeta */
+  }
+
+  .room-card img {
+    width: 80%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .rooms-container {
+    grid-template-columns: 1fr;
+    justify-items: center; /* Centra horizontalmente las tarjetas */
+  }
+
+  .room-card {
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 10px;
+    padding: 10px;
+    width: 100%; /* Asegura que la tarjeta ocupe todo el ancho disponible */
+    max-width: 800px; /* Limita el ancho máximo de la tarjeta */
+    justify-items: center;
+  }
+
+  .room-card img {
+    width: 50%;
+  }
+
+  .room-card-content {
+    width: 50%;
+    padding-left: 20px;
+    margin-top: 0;
+    justify-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .rooms-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    justify-items: center;
+  }
+
+  .room-card {
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    max-width: 650px;
+    justify-items: center;
+  }
+
+  .room-card img {
+    width: 100%;
+  }
+
+  .room-card-content {
+    width: 100%;
+    padding-left: 0;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rooms-container {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .room-card {
+    margin: 5px;
+    padding: 5px;
+  }
+
+  .room-card img {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .advance-tag, .price-tag {
+    font-size: 1rem;
+    padding: 3px 7px;
+  }
 }
