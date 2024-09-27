@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
@@ -12,6 +12,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {
   CreateDepositDialogComponent
 } from "../../../business/components/create-deposit-dialog/create-deposit-dialog.component";
+import {MatSidenav} from "@angular/material/sidenav";
+import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 
 @Component({
   selector: 'app-header',
@@ -22,12 +24,17 @@ import {
     MatToolbar,
     MatIcon,
     MatIconButton,
-    NgIf
+    NgIf,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
+
+  @ViewChild('sidenav') sidenav!: MatSidenav;
 
   currentUser: User | null = null;
   userData: any | undefined;
@@ -37,7 +44,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private userService: UserService,
-              private depositService: DepositService,
               public dialog: MatDialog) {}
 
   ngOnInit(): void {

@@ -4,6 +4,8 @@ mat-toolbar {
   color: white; /* White text color for better contrast */
   font-family: 'Roboto', sans-serif; /* Clean, modern font */
   padding: 0 16px; /* Padding for the toolbar content */
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping of content */
 }
 
 mat-toolbar a {
@@ -11,10 +13,6 @@ mat-toolbar a {
   text-decoration: none; /* Remove underline from links */
   font-weight: 500; /* Slightly bolder font for the links */
   margin-right: 20px; /* Spacing between links */
-}
-
-mat-toolbar a:hover {
-  text-decoration: underline; /* Underline on hover */
 }
 
 .spacer {
@@ -41,16 +39,27 @@ mat-icon-button:hover mat-icon {
   color: #81C784; /* Lighter green on hover */
 }
 
-mat-icon {
-  font-size: 24px; /* Standard icon size */
-}
+/* Responsive Styles */
+@media (max-width: 768px) {
+  mat-toolbar {
+    flex-direction: row; /* Maintain row layout on mobile */
+    justify-content: space-between; /* Adjust layout */
+  }
 
-/* Active Link Styles */
-a.active {
-  border-bottom: 2px solid #81C784; /* Light green underline for active link */
-}
+  /* Hide right-side links on mobile */
+  mat-toolbar a:not(:first-child),
+  mat-toolbar .spacer:not(:first-child) {
+    display: none; /* Hide other links */
+  }
 
-/* Logout Button */
-mat-icon-button.logout-button {
-  margin-left: 20px; /* Spacing before the logout button */
+  /* Mobile menu button visibility */
+  .mobile-menu-button {
+    display: block;
+  }
+
+  .credits-container {
+    flex-grow: 1;
+    justify-content: center; /* Center-align credits on mobile */
+    display: flex; /* Ensure credits container is visible */
+  }
 }

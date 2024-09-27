@@ -11,14 +11,19 @@
   </div>
 
   <span class="spacer"></span>
-  <a *ngIf="!isAuthenticated()" routerLink="/login">Log In</a>
-  <a *ngIf="isAuthenticated() && dataPlayer" routerLink="/rooms">Rooms</a>
-  <a *ngIf="isAuthenticated()" routerLink="/sport-spaces">Sport Spaces</a>
-  <a *ngIf="isAuthenticated() && dataOwner" routerLink="/subscriptions">Subscriptions</a>
-  <button *ngIf="isAuthenticated()" mat-icon-button routerLink="/profile">
-    <mat-icon>account_circle</mat-icon>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="mobile-menu-button">
+    <mat-icon>menu</mat-icon>
   </button>
-  <button *ngIf="isAuthenticated()" mat-icon-button (click)="logout()">
-    <mat-icon>logout</mat-icon>
-  </button>
+  <mat-menu #menu="matMenu">
+    <a mat-menu-item *ngIf="isAuthenticated() && dataPlayer" routerLink="/rooms">Rooms</a>
+    <a mat-menu-item *ngIf="isAuthenticated()" routerLink="/sport-spaces">Sport Spaces</a>
+    <a mat-menu-item *ngIf="isAuthenticated() && dataOwner" routerLink="/subscriptions">Subscriptions</a>
+    <a mat-menu-item *ngIf="isAuthenticated()" routerLink="/profile">
+      <mat-icon>account_circle</mat-icon> Profile
+    </a>
+    <button mat-menu-item *ngIf="isAuthenticated()" (click)="logout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </mat-menu>
 </mat-toolbar>

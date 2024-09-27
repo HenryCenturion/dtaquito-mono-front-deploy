@@ -44,6 +44,7 @@
       Bank Account Email is <strong>required</strong>
     </mat-error>
   </mat-form-field>
-  <button mat-flat-button class="signup-button" type="submit">Register</button>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <button mat-flat-button class="error-button" type="submit">Register</button>
 </form>
 <div id="paypal-button-container"></div>

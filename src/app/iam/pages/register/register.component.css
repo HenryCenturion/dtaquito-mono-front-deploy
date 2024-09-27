@@ -72,6 +72,18 @@ mat-error {
   font-size: 0.9rem; /* Slightly smaller text for error messages */
 }
 
+/* Error Message Styles */
+.error-message {
+  color: #f44336; /* Red color for error messages */
+  font-size: 0.9rem; /* Slightly smaller text for error messages */
+  margin-bottom: 10px; /* Space below the error message */
+  text-align: center; /* Center align the error message */
+  background-color: #ffe6e6; /* Light red background for visibility */
+  padding: 10px; /* Padding around the error message */
+  border-radius: 4px; /* Rounded corners for the error message */
+  border: 1px solid #f44336; /* Red border for the error message */
+}
+
 /* Keyframes for Animations */
 
 /* Fade-in Animation for the Form */

@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
   roleFormControl = new FormControl('', [Validators.required]);
   subscriptionFormControl = new FormControl('', [Validators.required]);
   bankAccountFormControl = new FormControl('', [Validators.required, Validators.email]);
+  errorMessage: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -54,6 +55,11 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         error => {
+          if (error.message === 'User with this email already exists') {
+            this.errorMessage = 'User with this email already exists';
+          } else {
+            this.errorMessage = 'An unknown error occurred';
+          }
         }
       );
     }

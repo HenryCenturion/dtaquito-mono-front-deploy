@@ -22,7 +22,14 @@ export class AuthService {
   constructor(private router: Router, private http: HttpClient, private userService: UserService) { }
 
   register(user: any): Observable<any> {
-    return this.userService.createUser(user);
+    return this.userService.createUser(user).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 400 || typeof error.error === 'string' && error.error.includes('User with this email already exists')) {
+          return throwError(() => new Error('User with this email already exists'));
+        }
+        return throwError(() => new Error('An unknown error occurred'));
+      })
+    );
   }
 
   login(email: string, password: string): Observable<User> {
