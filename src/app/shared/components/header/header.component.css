@@ -23,11 +23,16 @@ mat-toolbar a {
 .credits-container {
   display: flex;
   align-items: center;
-  gap: 8px; /* Spacing between credits content */
+  gap: 6px; /* Spacing between credits content */
 }
 
 .credits-container span {
   font-weight: bold; /* Bold text for emphasis */
+  font-size: 16px; /* Fixed font size */
+}
+
+.credits-container button mat-icon {
+  font-size: 24px;
 }
 
 /* Icon Button Styles */
@@ -39,6 +44,7 @@ mat-icon-button:hover mat-icon {
   color: #81C784; /* Lighter green on hover */
 }
 
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   mat-toolbar {
@@ -47,7 +53,7 @@ mat-icon-button:hover mat-icon {
   }
 
   /* Hide right-side links on mobile */
-  mat-toolbar a:not(:first-child),
+  mat-toolbar a:not(:first-child):not(.sign-in-button),
   mat-toolbar .spacer:not(:first-child) {
     display: none; /* Hide other links */
   }
@@ -62,4 +68,10 @@ mat-icon-button:hover mat-icon {
     justify-content: center; /* Center-align credits on mobile */
     display: flex; /* Ensure credits container is visible */
   }
+
+  .sign-in-button {
+    display: block; /* Ensure Sign In button is visible */
+    margin-left: auto; /* Align Sign In button to the right */
+  }
 }
+
