@@ -1,12 +1,9 @@
-body {
-  background-color: #FFFBDB;
-}
-
 .rooms-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   margin-top: 20px;
+  justify-items: center;
 }
 
 .room-card-container {
@@ -62,8 +59,7 @@ body {
   border-radius: 15px;
   object-fit: cover;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 15px auto 0;
 }
 
 .room-card-content {
@@ -80,24 +76,7 @@ body {
   width: 100%;
 }
 
-.advance-tag {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: rgba(255, 0, 0, 0.8);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 1.2rem;
-  z-index: 1;
-}
-
-mat-card.room-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
+.advance-tag,
 .price-tag {
   position: absolute;
   top: 10px;
@@ -109,15 +88,17 @@ mat-card.room-card:hover {
   font-weight: bold;
   display: flex;
   align-items: center;
+  z-index: 1;
 }
 
-mat-card.room-card img {
-  margin-top: 15px;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  object-fit: cover;
-  flex-grow: 1;
+.advance-tag {
+  top: 20px;
+  font-size: 1.2rem;
+}
+
+mat-card.room-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 mat-card-header {
@@ -146,34 +127,77 @@ mat-icon {
   margin-right: 4px;
 }
 
+.edit-button,
+button.clear-filters,
+button.crete-room,
+button.join-button,
+button.view-room-button {
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 5px;
+}
+
 .edit-button {
   background-color: #007bff;
   color: white;
-  position: relative;
-  margin-right: 80px;
-  border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
 }
 
 .edit-button:hover {
   background-color: #0056b3;
 }
 
-mat-card-content {
-  margin: 10px 0;
-  text-align: left;
-}
-
-button {
-  border: none;
-  border-radius: 3px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-button:hover {
+button.clear-filters {
   background-color: #dc3545;
+  color: #fff;
+  height: 56px;
+}
+
+button.clear-filters:hover {
+  background-color: #c82333;
+}
+
+button.crete-room {
+  background-color: dodgerblue;
+  color: #fff;
+  height: 56px;
+}
+
+button.join-button,
+button.view-room-button {
+  background-color: #28a745;
   color: white;
+}
+
+button.join-button:hover,
+button.view-room-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+button.join-button:active,
+button.view-room-button:active {
+  background-color: #1e7e34;
+  transform: scale(1);
+}
+
+button.view-room-button.golden {
+  background-color: gold;
+  color: black;
+}
+
+button.view-room-button.golden:hover {
+  background-color: darkgoldenrod;
+  transform: scale(1.05);
+}
+
+button.view-room-button.golden:active {
+  background-color: goldenrod;
+  transform: scale(1);
 }
 
 .filters-container {
@@ -188,110 +212,29 @@ mat-form-field {
   min-width: 120px;
 }
 
-button.clear-filters {
-  background-color: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  height: 56px;
-}
-
-button.crete-room {
-  background-color: dodgerblue;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  height: 56px;
-}
-
-button.clear-filters:hover {
-  background-color: #c82333;
-}
-
-button.join-button, button.view-room-button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 5px;
-}
-
-button.join-button:hover, button.view-room-button:hover {
-  background-color: #218838;
-  transform: scale(1.05);
-}
-
-button.join-button:active, button.view-room-button:active {
-  background-color: #1e7e34;
-  transform: scale(1);
-}
-
-button.view-room-button.golden {
-  background-color: gold;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 5px;
-}
-
-button.view-room-button.golden:hover {
-  background-color: darkgoldenrod;
-  transform: scale(1.05);
-}
-
-button.view-room-button.golden:active {
-  background-color: goldenrod;
-  transform: scale(1);
-}
-
 @media (max-width: 1825px) {
-  .rooms-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    justify-items: center;
+  .room-card {
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    padding: 15px;
+    max-width: 550px;
+  }
+
+  .room-card img {
+    width: 80%;
   }
 
   .room-card-content {
     max-width: 60%;
     padding: 20px;
     margin-top: 20px;
-    justify-items: center;
-  }
-
-  .room-card {
-    flex-direction: column;
-    align-items: center;
-    margin: 15px;
-    padding: 15px;
-    width: 100%;
-    max-width: 550px; /* Limita el ancho máximo de la tarjeta */
-  }
-
-  .room-card img {
-    width: 80%;
   }
 }
 
 @media (max-width: 1200px) {
   .rooms-container {
     grid-template-columns: 1fr;
-    justify-items: center; /* Centra horizontalmente las tarjetas */
   }
 
   .room-card {
@@ -299,9 +242,7 @@ button.view-room-button.golden:active {
     align-items: flex-start;
     margin: 10px;
     padding: 10px;
-    width: 100%;
-    max-width: 800px; /* Limita el ancho máximo de la tarjeta */
-    justify-items: center;
+    max-width: 800px;
   }
 
   .room-card img {
@@ -312,15 +253,12 @@ button.view-room-button.golden:active {
     width: 50%;
     padding-left: 20px;
     margin-top: 0;
-    justify-items: center;
   }
 }
 
 @media (max-width: 768px) {
   .rooms-container {
-    grid-template-columns: 1fr;
     gap: 10px;
-    justify-items: center;
   }
 
   .room-card {
@@ -329,7 +267,6 @@ button.view-room-button.golden:active {
     margin: 10px;
     padding: 10px;
     max-width: 650px;
-    justify-items: center;
   }
 
   .room-card img {
@@ -345,7 +282,6 @@ button.view-room-button.golden:active {
 
 @media (max-width: 480px) {
   .rooms-container {
-    grid-template-columns: 1fr;
     gap: 5px;
   }
 
@@ -362,7 +298,8 @@ button.view-room-button.golden:active {
     font-size: 2rem;
   }
 
-  .advance-tag, .price-tag {
+  .advance-tag,
+  .price-tag {
     font-size: 1rem;
     padding: 3px 7px;
   }
