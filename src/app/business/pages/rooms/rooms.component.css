@@ -279,7 +279,7 @@ button.view-room-button.golden:active {
     align-items: center;
     margin: 15px;
     padding: 15px;
-    width: 100%; /* Asegura que la tarjeta ocupe todo el ancho disponible */
+    width: 100%;
     max-width: 550px; /* Limita el ancho máximo de la tarjeta */
   }
 
@@ -299,7 +299,7 @@ button.view-room-button.golden:active {
     align-items: flex-start;
     margin: 10px;
     padding: 10px;
-    width: 100%; /* Asegura que la tarjeta ocupe todo el ancho disponible */
+    width: 100%;
     max-width: 800px; /* Limita el ancho máximo de la tarjeta */
     justify-items: center;
   }
