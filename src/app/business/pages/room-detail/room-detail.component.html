@@ -8,9 +8,9 @@
         <mat-card-subtitle>Creator: {{ room.creator.name }}</mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image [src]="room.sportSpace.imageUrl" alt="{{ room.sportSpace.name }}">
-      <mat-card-content class="room-detail-card-content">
+      <mat-card-content class="room-detail-card-content centered-content">
         <p><strong>Sport Space:</strong> {{ room.sportSpace.name }}</p>
-        <p><strong>Opening Date:</strong> {{ formatDate(room.openingDate) }}</p>
+        <p><strong>Opening Date:</strong> {{ formatDate1(room.openingDate) }}</p>
         <p><strong>District:</strong> {{ room.sportSpace.district }}</p>
         <p><strong>Price:</strong> {{ room.sportSpace.price }}</p>
         <p><strong>Advance per person:</strong> {{ room.sportSpace.amount }}</p>
@@ -21,16 +21,15 @@
     </mat-card>
   </div>
 
-  <!-- Sección de jugadores y chat -->
   <div class="players-chat-section">
     <mat-card class="room-detail-card">
       <mat-card-header class="room-detail-card-header">
-        <mat-card-title>Players</mat-card-title>
+        <mat-card-title>Players ({{ players.length }} / {{ room.maxPlayers }})</mat-card-title>
       </mat-card-header>
       <mat-card-content class="room-detail-card-content">
         <ul>
           <div *ngFor="let player of players" class="player-list-item">
-            <mat-icon>check</mat-icon>
+            <mat-icon>account_circle</mat-icon>
             {{ player.name }}
           </div>
         </ul>
@@ -43,13 +42,19 @@
       </mat-card-header>
       <mat-card-content class="room-detail-card-content">
         <div class="chat-input">
-          <mat-form-field>
-            <input matInput placeholder="Type your message" [(ngModel)]="newMessage">
-          </mat-form-field>
-          <button mat-button (click)="sendMessage()">Send</button>
+          <input type="text" placeholder="Type your message" [(ngModel)]="newMessage" class="custom-input" (keydown.enter)="sendMessage()">
+          <button (click)="sendMessage()" class="custom-button">Send</button>
         </div>
-        <div class="chat-messages" *ngFor="let message of messages">
-          <p><strong>{{ message.user.name }}:</strong> {{ message.content }}</p>
+        <div class="chat-messages">
+          <div *ngFor="let message of messages; let last = last">
+            <p>
+              <strong [ngClass]="{'logged-in-user-name': message.user.id === userData.id}">
+                {{ message.user.name }}:
+              </strong> {{ message.content }}
+            </p>
+            <p class="message-timestamp">{{ formatDate2(message.createdAt) }}</p>
+            <div *ngIf="last" #lastMessage></div>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>

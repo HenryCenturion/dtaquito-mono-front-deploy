@@ -174,6 +174,18 @@ button.clear-filters:hover {
   background-color: #c82333;
 }
 
+.subscription-message {
+  background-color: #ffeb3b; /* Fondo amarillo */
+  color: #333; /* Texto oscuro */
+  padding: 15px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  text-align: center; /* Centrar el texto */
+  font-size: 1.2rem; /* Tamaño de fuente */
+  font-weight: bold; /* Negrita */
+  margin: 20px 0; /* Espaciado externo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
 @media (max-width: 768px) {
   .card-container {
     grid-template-columns: repeat(2, 1fr);

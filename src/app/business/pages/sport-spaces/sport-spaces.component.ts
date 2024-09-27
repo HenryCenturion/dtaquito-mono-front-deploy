@@ -49,15 +49,13 @@ import {MatInput} from "@angular/material/input";
   styleUrl: './sport-spaces.component.css'
 })
 export class SportSpacesComponent implements OnInit {
-
   sportSpaces: SportSpace[] = [];
   filteredSportSpaces: SportSpace[] = [];
-  userData: any | undefined;
-  userSubscriptionData: any | undefined;
-  dataOwner: boolean = false;
-  maxSportSpaces: number = 0;
-  canAddMoreSportSpaces: boolean = false;
-
+  userData: any;
+  userSubscriptionData: any;
+  dataOwner = false;
+  canAddMoreSportSpaces = false;
+  maxSportSpaces = 0;
   filter = {
     sportId: null,
     gamemode: '',
@@ -65,10 +63,9 @@ export class SportSpacesComponent implements OnInit {
     minPrice: 0,
     maxPrice: 0
   };
-
   sports = [
-    { id: 1, name: 'FUTBOL' },
-    { id: 2, name: 'BILLAR' }
+    { id: 1, name: 'Football' },
+    { id: 2, name: 'Billiards' }
   ];
   districts = [
     'Cercado de Lima', 'San Isidro', 'Miraflores', 'San Borja', 'Surco',
@@ -78,10 +75,14 @@ export class SportSpacesComponent implements OnInit {
   ];
   gamemodes: string[] = [];
 
-  constructor(private sportSpaceService: SportSpaceService, private userService: UserService, private subscriptionService: SubscriptionService, private dialog: MatDialog) {}
+  constructor(
+    private sportSpaceService: SportSpaceService,
+    private userService: UserService,
+    private subscriptionService: SubscriptionService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-
     this.loadSportSpaces();
     this.updateGamemodes();
   }
@@ -138,6 +139,8 @@ export class SportSpacesComponent implements OnInit {
         return 2;
       case 'oro':
         return 3;
+      case 'free':
+        return 0;
       default:
         return 0;
     }

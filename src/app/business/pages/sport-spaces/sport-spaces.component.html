@@ -36,6 +36,9 @@
 </div>
 
 <button *ngIf="dataOwner && canAddMoreSportSpaces" mat-flat-button (click)="addSportSpace()">Add sport space</button>
+<p *ngIf="dataOwner && userSubscriptionData.planType === 'free'" class="subscription-message">
+  Purchase a subscription to add your sport spaces.
+</p>
 
 <div class="card-container">
   <mat-card class="example-card" *ngFor="let sportSpace of filteredSportSpaces" appearance="outlined">

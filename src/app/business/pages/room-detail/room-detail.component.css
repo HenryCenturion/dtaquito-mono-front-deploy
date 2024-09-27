@@ -8,6 +8,20 @@
   transform-origin: center;
 }
 
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.logged-in-user-name {
+  background-color: #e0f7fa; /* Color de fondo diferente */
+  padding: 5px;
+  border-radius: 5px;
+}
+
 @keyframes pulse {
   0% { transform: scale(0.6); }
   50% { transform: scale(1); }
@@ -31,7 +45,7 @@
 }
 
 .room-detail-section {
-  flex: 2;
+  flex: 7;
   margin-right: 20px;
   background-color: white;
   padding: 20px;
@@ -41,7 +55,7 @@
 }
 
 .players-chat-section {
-  flex: 1;
+  flex: 6;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -68,8 +82,8 @@
 }
 
 .chat-messages {
-  max-height: 300px;
-  overflow-y: auto;
+  max-height: 500px; /* Altura máxima de la sección de chat */
+  overflow-y: auto; /* Habilitar barra de desplazamiento vertical */
   margin-bottom: 10px;
   background-color: white;
   padding: 10px;
@@ -83,7 +97,35 @@ button {
 .chat-input {
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.custom-input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.custom-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.custom-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.custom-button:hover {
+  background-color: #0056b3;
 }
 
 .chat-input mat-form-field {
@@ -108,6 +150,23 @@ button {
 
 .chat-input button:hover {
   background-color: #0056b3;
+}
+
+.chat-message {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-content {
+  flex-grow: 1;
+}
+
+.message-timestamp {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: right;
+  margin-left: 10px; /* Espacio entre el mensaje y la marca de tiempo */
 }
 
 /* Estilos responsivos */

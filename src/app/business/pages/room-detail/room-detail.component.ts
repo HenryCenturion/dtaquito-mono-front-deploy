@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Room} from "../../models/room.model";
 import {ActivatedRoute} from "@angular/router";
 import {RoomService} from "../../services/room.service";
@@ -10,13 +10,14 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from "@angular/material/card";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {UserService} from "../../services/user.service";
 import {MatFormField} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
+import {format, toZonedTime} from "date-fns-tz";
 
 @Component({
   selector: 'app-room-detail',
@@ -34,12 +35,15 @@ import {MatIcon} from "@angular/material/icon";
     MatInput,
     FormsModule,
     MatButton,
-    MatIcon
+    MatIcon,
+    NgClass
   ],
   templateUrl: './room-detail.component.html',
   styleUrl: './room-detail.component.css'
 })
 export class RoomDetailComponent implements OnInit {
+  @ViewChild('lastMessage') lastMessage: ElementRef | undefined;
+
   room: Room | undefined;
   players: any[] = [];
   messages: any[] = [];
@@ -51,6 +55,16 @@ export class RoomDetailComponent implements OnInit {
     private roomService: RoomService,
     private userService: UserService
   ) {}
+
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
+  }
+
+  private scrollToBottom(): void {
+    if (this.lastMessage) {
+      this.lastMessage.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
 
   ngOnInit(): void {
@@ -84,6 +98,7 @@ export class RoomDetailComponent implements OnInit {
       this.roomService.getRoomById(+roomId).subscribe(
         (data: Room) => {
           this.room = data;
+          this.setMaxPlayers(this.room);
         }
       );
     }
@@ -94,14 +109,20 @@ export class RoomDetailComponent implements OnInit {
     if (roomId) {
       this.roomService.getRoomChat(+roomId).subscribe(
         (data: any[]) => {
+          data.forEach(message => {
+            message.createdAt = new Date(message.createdAt);
+          });
+          data.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
           this.messages = [];
           data.forEach(message => {
             this.userService.getUserById(message.userId).subscribe(
               (user: any) => {
                 this.messages.push({
                   content: message.content,
-                  user: user
+                  user: user,
+                  createdAt: message.createdAt
                 });
+                this.messages.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
               }
             );
           });
@@ -157,9 +178,33 @@ export class RoomDetailComponent implements OnInit {
     }
   }
 
-  formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleString();
+  setMaxPlayers(room: Room): number {
+    switch (room.sportSpace.gamemode) {
+      case "FUTBOL_5":
+        return room.maxPlayers = 10;
+      case "FUTBOL_7":
+        return room.maxPlayers = 14;
+      case "FUTBOL_8":
+        return room.maxPlayers = 16;
+      case "FUTBOL_11":
+        return room.maxPlayers = 22;
+      case "BILLAR_3":
+        return room.maxPlayers = 3;
+      default:
+        return 0;
+    }
+  }
+
+  formatDate1(dateString: string): string {
+    const timeZone = 'Etc/GMT-0';
+    const zonedDate = toZonedTime(new Date(dateString), timeZone);
+    return format(zonedDate, 'dd/MM/yyyy, HH:mm:ss', { timeZone });
+  }
+
+  formatDate2(dateString: string): string {
+    const timeZone = 'Etc/GMT+10';
+    const zonedDate = toZonedTime(new Date(dateString), timeZone);
+    return format(zonedDate, 'dd/MM/yyyy, HH:mm:ss', { timeZone });
   }
 
   sendMessage(): void {
@@ -167,9 +212,12 @@ export class RoomDetailComponent implements OnInit {
     if (roomId && this.newMessage.trim() && this.userData) {
       this.roomService.sendMessage(+roomId, this.newMessage, this.userData.id).subscribe(
         (response: any) => {
-          this.messages.push(response);
+          this.messages.push({
+            content: response.content,
+            user: this.userData,
+            createdAt: new Date(response.createdAt)
+          });
           this.newMessage = '';
-          window.location.reload();
         },
         (error: any) => {
           console.error('Error sending message', error);
