@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf, TitleCasePipe} from "@angular/common";
 import {Room} from "../../models/room.model";
 import {RoomService} from "../../services/room.service";
 import {
@@ -23,6 +23,7 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {CreateRoomDialogComponent} from "../../components/create-room-dialog/create-room-dialog.component";
+import confetti from "canvas-confetti";
 
 
 @Component({
@@ -47,7 +48,8 @@ import {CreateRoomDialogComponent} from "../../components/create-room-dialog/cre
     FormsModule,
     MatInput,
     MatLabel,
-    NgClass
+    NgClass,
+    TitleCasePipe
   ],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.css'
@@ -56,6 +58,7 @@ export class RoomsComponent implements OnInit {
   rooms: Room[] = [];
   userData: any | undefined;
   filteredRooms: Room[] = [];
+  isFilterMenuOpen = false;
 
   filter = {
     sportId: null,
@@ -70,12 +73,8 @@ export class RoomsComponent implements OnInit {
     { id: 2, name: 'BILLAR' }
   ];
   districts = [
-    'Ancón', 'Ate', 'Barranco', 'Breña', 'Carabayllo', 'Chaclacayo', 'Chorrillos', 'Cieneguilla', 'Comas', 'El Agustino',
-    'Independencia', 'Jesús María', 'La Molina', 'La Victoria', 'Lima', 'Lince', 'Los Olivos', 'Lurigancho', 'Lurín',
-    'Magdalena del Mar', 'Miraflores', 'Pachacámac', 'Pucusana', 'Pueblo Libre', 'Puente Piedra', 'Punta Hermosa',
-    'Punta Negra', 'Rímac', 'San Bartolo', 'San Borja', 'San Isidro', 'San Juan de Lurigancho', 'San Juan de Miraflores',
-    'San Luis', 'San Martín de Porres', 'San Miguel', 'Santa Anita', 'Santa María del Mar', 'Santa Rosa', 'Santiago de Surco',
-    'Surquillo', 'Villa El Salvador', 'Villa María del Triunfo'
+    'San_Miguel', 'San_Borja', 'San_Isidro', 'Surco', 'Magdalena', 'Pueblo_Libre', 'Miraflores', 'Barranco', 'La_Molina',
+    'Jesus_Maria', 'Lince', 'Cercado_de_Lima', 'Chorrillos'
   ];
   gamemodes: string[] = [];
 
@@ -266,7 +265,7 @@ export class RoomsComponent implements OnInit {
   formatDate(dateString: string): string {
     const timeZone = 'Etc/GMT-0';
     const zonedDate = toZonedTime(new Date(dateString), timeZone);
-    return format(zonedDate, 'dd/MM/yyyy, HH:mm:ss', { timeZone });
+    return format(zonedDate, 'dd/MM/yyyy, HH:mm', { timeZone });
   }
 
   getRemainingPlayers(room: Room): number {
@@ -295,4 +294,44 @@ export class RoomsComponent implements OnInit {
     });
   }
 
+  transformGamemode(gamemode: string): string {
+    return gamemode.replace('_', ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  toggleFilterMenu() {
+    this.isFilterMenuOpen = !this.isFilterMenuOpen;
+  }
+
+  cooldown = false;
+
+
+
+  celebrate() {
+    let scalar = 3;
+    let shapes = [
+      confetti.shapeFromText({ text: '⚽', scalar }),
+      confetti.shapeFromText({ text: '🎱', scalar })
+    ];
+    let randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+
+    if (this.cooldown) {
+      return;
+    }
+
+    this.cooldown = true;
+    const duration = 3300;
+
+    confetti({
+      particleCount: 80,
+      spread: 160,
+      origin: { y: 0.37 },
+      shapes: [randomShape],
+      scalar
+    });
+
+    setTimeout(() => {
+      confetti.reset();
+      this.cooldown = false;
+    }, duration);
+  }
 }

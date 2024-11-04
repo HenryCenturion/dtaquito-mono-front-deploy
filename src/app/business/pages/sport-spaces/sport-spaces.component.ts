@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
+import {NgClass, NgForOf, NgIf, NgOptimizedImage, TitleCasePipe} from "@angular/common";
 import {
   MatCard,
   MatCardContent,
@@ -22,8 +22,6 @@ import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import confetti from 'canvas-confetti';
 
-
-
 @Component({
   selector: 'app-sport-spaces',
   standalone: true,
@@ -44,7 +42,9 @@ import confetti from 'canvas-confetti';
     FormsModule,
     MatOption,
     MatInput,
-    MatLabel
+    MatLabel,
+    TitleCasePipe,
+    NgClass
   ],
   templateUrl: './sport-spaces.component.html',
   styleUrl: './sport-spaces.component.css'
@@ -57,8 +57,9 @@ export class SportSpacesComponent implements OnInit {
   dataOwner = false;
   canAddMoreSportSpaces = false;
   maxSportSpaces = 0;
+  isFilterMenuOpen = false;
   filter = {
-    sportId: null,
+    sportId: 0,
     gamemode: '',
     district: '',
     minPrice: 0,
@@ -69,12 +70,8 @@ export class SportSpacesComponent implements OnInit {
     { id: 2, name: 'Billiards' }
   ];
   districts = [
-    'Ancón', 'Ate', 'Barranco', 'Breña', 'Carabayllo', 'Chaclacayo', 'Chorrillos', 'Cieneguilla', 'Comas', 'El Agustino',
-    'Independencia', 'Jesús María', 'La Molina', 'La Victoria', 'Lima', 'Lince', 'Los Olivos', 'Lurigancho', 'Lurín',
-    'Magdalena del Mar', 'Miraflores', 'Pachacámac', 'Pucusana', 'Pueblo Libre', 'Puente Piedra', 'Punta Hermosa',
-    'Punta Negra', 'Rímac', 'San Bartolo', 'San Borja', 'San Isidro', 'San Juan de Lurigancho', 'San Juan de Miraflores',
-    'San Luis', 'San Martín de Porres', 'San Miguel', 'Santa Anita', 'Santa María del Mar', 'Santa Rosa', 'Santiago de Surco',
-    'Surquillo', 'Villa El Salvador', 'Villa María del Triunfo'
+    'San_Miguel', 'San_Borja', 'San_Isidro', 'Surco', 'Magdalena', 'Pueblo_Libre', 'Miraflores', 'Barranco', 'La_Molina',
+    'Jesus_Maria', 'Lince', 'Cercado_de_Lima', 'Chorrillos'
   ];
   gamemodes: string[] = [];
 
@@ -120,6 +117,7 @@ export class SportSpacesComponent implements OnInit {
   private updateCanAddMoreSportSpaces(userId: string): void {
     this.subscriptionService.getSubscriptionbyUserId(userId).subscribe(
       (data: any) => {
+        console.log(data);
         this.userSubscriptionData = data;
         this.maxSportSpaces = this.getMaxSportSpaces(data.planType);
         this.canAddMoreSportSpaces = this.sportSpaces.length < this.maxSportSpaces;
@@ -176,6 +174,9 @@ export class SportSpacesComponent implements OnInit {
   }
 
   applyFilters(): void {
+    if (this.filter.sportId === 2) {
+      this.filter.gamemode = 'BILLAR_3';
+    }
     this.updateGamemodes();
     this.filteredSportSpaces = this.sportSpaces.filter(sportSpace => {
       return (!this.filter.sportId || sportSpace.sportId === this.filter.sportId) &&
@@ -188,7 +189,7 @@ export class SportSpacesComponent implements OnInit {
 
   clearFilters(): void {
     this.filter = {
-      sportId: null,
+      sportId: 0,
       gamemode: '',
       district: '',
       minPrice: 0,
@@ -207,8 +208,19 @@ export class SportSpacesComponent implements OnInit {
     }
   }
 
+  transformGamemode(gamemode: string): string {
+    return gamemode.replace('_', ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  cooldown = false;
+
   celebrate() {
-    const duration = 6300;
+    if (this.cooldown) {
+      return;
+    }
+
+    this.cooldown = true;
+    const duration = 3300;
 
     confetti({
       particleCount: 100,
@@ -216,6 +228,24 @@ export class SportSpacesComponent implements OnInit {
       origin: { y: 0.37 },
     });
 
-    setTimeout(() => confetti.reset(), duration);
+    setTimeout(() => {
+      confetti.reset();
+      this.cooldown = false;
+    }, duration);
+  }
+
+  toggleFilterMenu() {
+    this.isFilterMenuOpen = !this.isFilterMenuOpen;
+  }
+
+  getSportName(sportId: number): string {
+    switch (sportId) {
+      case 1:
+        return 'Futbol';
+      case 2:
+        return 'Billar';
+      default:
+        return 'Unknown Sport';
+    }
   }
 }

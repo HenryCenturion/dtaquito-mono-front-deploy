@@ -7,13 +7,14 @@ import { Router } from "@angular/router";
 import {BehaviorSubject, catchError, Observable, tap, throwError} from "rxjs";
 import {User} from "../../business/models/user.model";
 import {UserService} from "../../business/services/user.service";
+import {environment} from "../../../environment/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private LOGIN_URL = 'https://dtaquito-backend.azurewebsites.net/api/v1/authentication/sign-in';
+  private baseUrl = environment.baseUrl+'/authentication/sign-in';
   private tokenKey = 'authToken';
   private userIdKey = 'userId';
   private currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
@@ -35,7 +36,7 @@ export class AuthService {
   login(email: string, password: string): Observable<User> {
     const body = { email: email, password: password };
 
-    return this.http.post<User>(this.LOGIN_URL, body).pipe(
+    return this.http.post<User>(this.baseUrl, body).pipe(
       tap(response => {
         if (response.token) {
           this.setToken(response.token);
@@ -54,12 +55,13 @@ export class AuthService {
     localStorage.setItem(this.userIdKey, userId.toString());
   }
 
-  private getToken(): string | null {
+  getToken(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
       return localStorage.getItem(this.tokenKey);
     }
     return null;
   }
+
 
   isAuthenticated(): boolean {
     const token = this.getToken();

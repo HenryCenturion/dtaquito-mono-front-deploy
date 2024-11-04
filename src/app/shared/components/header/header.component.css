@@ -1,69 +1,75 @@
-mat-toolbar {
-  background-color: #4CAF50;
-  color: white;
-  font-family: 'Roboto', sans-serif;
-  padding: 0 16px;
-  display: flex;
-  flex-wrap: wrap;
+.nav-link {
+  position: relative;
+  display: inline-block;
+  color: #ef4444; /* Rojo */
+  border: 1px solid #ef4444; /* Borde rojo */
+  padding: 0.5rem 1rem;
+  background-color: #ffffff; /* Fondo blanco */
+  overflow: hidden;
+  transition: color 0.3s ease, box-shadow 0.3s ease;
 }
 
-mat-toolbar a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  margin-right: 20px;
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: #ef4444; /* Fondo rojo en hover */
+  z-index: 0;
+  transition: width 0.5s ease;
 }
 
-.spacer {
-  flex: 1 1 auto;
+.nav-link:hover {
+  color: #ffffff; /* Cambia el color del texto a blanco en hover */
+  box-shadow: 0 4px 6px rgba(239, 68, 68, 0.5); /* Sombra */
 }
 
-.credits-container {
+.nav-link:hover::before {
+  width: 100%; /* Expande el fondo al pasar el puntero */
+}
+
+.nav-link > span {
+  position: relative;
+  z-index: 10; /* Asegura que el texto esté encima del fondo animado */
+}
+
+.logout-button {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.credits-container span {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.credits-container button mat-icon {
-  font-size: 24px;
-}
-
-mat-icon-button {
+  justify-content: center;
+  height: 50px;
+  width: 10rem; /* Puedes ajustar el ancho si es necesario */
+  overflow: hidden;
+  background-color: #2563eb; /* Azul */
   color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.5); /* Sombra */
 }
 
-mat-icon-button:hover mat-icon {
-  color: #81C784;
+.logout-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 0;
+  transition: border-width 0.1s linear;
+  box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-  mat-toolbar {
-    flex-direction: row;
-    justify-content: space-between;
-  }
+.logout-button:hover {
+  background-color: white;
+  color: #2563eb; /* Cambia el texto a azul en hover */
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.5);
+}
 
-  mat-toolbar a:not(:first-child):not(.sign-in-button),
-  mat-toolbar .spacer:not(:first-child) {
-    display: none;
-  }
+.logout-button:hover::before {
+  border: 25px solid white; /* Expande el borde al hacer hover */
+}
 
-  .mobile-menu-button {
-    display: block;
-  }
-
-  .credits-container {
-    flex-grow: 1;
-    justify-content: center;
-    display: flex;
-  }
-
-  .sign-in-button {
-    display: block;
-    margin-left: auto;
-  }
+.logout-button span {
+  position: relative;
+  z-index: 10;
 }

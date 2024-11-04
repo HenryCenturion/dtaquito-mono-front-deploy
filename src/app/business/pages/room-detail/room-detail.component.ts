@@ -18,6 +18,9 @@ import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {format, toZonedTime} from "date-fns-tz";
+import {WebSocketService} from "../../../shared/services/websocket.service";
+import {ChatService} from "../../services/chat.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-room-detail',
@@ -39,7 +42,8 @@ import {format, toZonedTime} from "date-fns-tz";
     NgClass
   ],
   templateUrl: './room-detail.component.html',
-  styleUrl: './room-detail.component.css'
+  styleUrl: './room-detail.component.css',
+  providers: [WebSocketService, ChatService]
 })
 export class RoomDetailComponent implements OnInit {
   @ViewChild('lastMessage') lastMessage: ElementRef | undefined;
@@ -49,18 +53,27 @@ export class RoomDetailComponent implements OnInit {
   messages: any[] = [];
   newMessage: string = '';
   userData: any;
+  showEmojiPicker: boolean = false;
+  detailsExpanded: boolean = false;
+  emojis: string[] = ['😀', '😂', '😍', '😢', '😡', '👍', '🎉', '❤️'];
+  userDataMessage: any;
 
   constructor(
     private route: ActivatedRoute,
     private roomService: RoomService,
-    private userService: UserService
+    private userService: UserService,
+    private chatService: ChatService,
+    wsService: WebSocketService
   ) {}
 
   scrollToBottom(): void {
     if (this.lastMessage) {
-      this.lastMessage.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        this.lastMessage?.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
   }
+
 
 
   ngOnInit(): void {
@@ -68,6 +81,7 @@ export class RoomDetailComponent implements OnInit {
     this.getRoomDetails();
     this.getPlayerList();
     this.getRoomChat();
+    this.subscribeToMessages();
   }
 
   getUser(): void {
@@ -119,6 +133,7 @@ export class RoomDetailComponent implements OnInit {
                   createdAt: message.createdAt
                 });
                 this.messages.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+                this.scrollToBottom();
               }
             );
           });
@@ -194,20 +209,20 @@ export class RoomDetailComponent implements OnInit {
   formatDate1(dateString: string): string {
     const timeZone = 'Etc/GMT-0';
     const zonedDate = toZonedTime(new Date(dateString), timeZone);
-    return format(zonedDate, 'dd/MM/yyyy, HH:mm:ss', { timeZone });
+    return format(zonedDate, 'dd/MM/yyyy, HH:mm', { timeZone });
   }
 
   formatDate2(dateString: string): string {
     const timeZone = 'Etc/GMT+10';
     const zonedDate = toZonedTime(new Date(dateString), timeZone);
-    return format(zonedDate, 'dd/MM/yyyy, HH:mm:ss', { timeZone });
+    return format(zonedDate, 'dd/MM/yyyy, HH:mm', { timeZone });
   }
 
   sendMessage(event: Event): void {
     event.stopPropagation();
     const roomId = this.route.snapshot.paramMap.get('id');
     if (roomId && this.newMessage.trim() && this.userData) {
-      this.roomService.sendMessage(+roomId, this.newMessage, this.userData.id).subscribe(
+      this.chatService.sendMessage(+roomId, this.newMessage, this.userData.id).subscribe(
         (response: any) => {
           this.messages.push({
             content: response.content,
@@ -215,11 +230,50 @@ export class RoomDetailComponent implements OnInit {
             createdAt: new Date(response.createdAt)
           });
           this.newMessage = '';
+          this.scrollToBottom();
         },
         (error: any) => {
           console.error('Error sending message', error);
         }
       );
     }
+  }
+
+  subscribeToMessages(): void {
+    this.chatService.receiveMessages().subscribe(
+      (message: any) => {
+        if (message.author !== this.userData.id) {
+          this.userService.getUserById(message.author).subscribe(
+            (user: any) => {
+              this.messages.push({
+                content: message.message,
+                user: user,
+                createdAt: new Date()
+              });
+              setTimeout(() => this.scrollToBottom(), 0);
+            },
+            (error: any) => {
+              console.error('Error fetching user', error);
+            }
+          );
+        }
+      },
+      (error: any) => {
+        console.error('Error receiving message', error);
+      }
+    );
+  }
+
+  toggleEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  addEmoji(emoji: string) {
+    this.newMessage += emoji;
+    this.showEmojiPicker = false;
+  }
+
+  toggleDetails(): void {
+    this.detailsExpanded = !this.detailsExpanded;
   }
 }

@@ -34,14 +34,10 @@ export class LoginComponent {
     if (this.emailFormControl.valid && this.passwordFormControl.valid) {
       const email = this.emailFormControl.value ?? '';
       const password = this.passwordFormControl.value ?? '';
-      this.authService.login(email, password).subscribe(
-        success => {
-          this.router.navigate(['/home']);
-          setTimeout(() => window.location.reload(), 500);
-        },
-        error => {
-        }
-      );
+      this.authService.login(email, password).subscribe(() => {
+        this.router.navigate(['/home']);
+      });
     }
   }
+
 }

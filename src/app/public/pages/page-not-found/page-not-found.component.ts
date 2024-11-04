@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ChatService} from "../../../business/services/chat.service";
 
 @Component({
   selector: 'app-page-not-found',

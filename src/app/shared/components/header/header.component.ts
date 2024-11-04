@@ -34,8 +34,6 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 })
 export class HeaderComponent implements OnInit {
 
-  @ViewChild('sidenav') sidenav!: MatSidenav;
-
   currentUser: User | null = null;
   userData: any | undefined;
   dataOwner: boolean = false;
@@ -47,11 +45,27 @@ export class HeaderComponent implements OnInit {
               public dialog: MatDialog) {}
 
   ngOnInit(): void {
+    // Verifica si hay un token en el localStorage al iniciar
+    const token = this.authService.getToken();
+    if (token && this.authService.isAuthenticated()) {
+      this.getUser(); // Intenta obtener el usuario
+    }
+
+    // Suscríbete a los cambios del usuario
     this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
+      if (user) {
+        this.getUser(); // Llama a getUser() si hay un usuario autenticado
+      } else {
+        this.userData = null; // Limpia los datos si no hay usuario
+        this.dataOwner = false;
+        this.dataPlayer = false;
+        this.userCredits = 0;
+      }
     });
-    this.getUser();
   }
+
+
 
   logout() {
     this.authService.logout();

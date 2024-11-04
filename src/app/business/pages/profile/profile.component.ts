@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from "../../models/user.model";
 import { UserService } from "../../services/user.service";
 import { MatDrawer, MatDrawerContainer } from "@angular/material/sidenav";
-import { NgIf } from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
 import { MatButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from "@angular/material/expansion";
@@ -25,7 +25,8 @@ import { MatInput } from "@angular/material/input";
     FormsModule,
     MatFormField,
     MatLabel,
-    MatInput
+    MatInput,
+    NgClass
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -34,7 +35,6 @@ export class ProfileComponent implements OnInit {
   user: User | null = null;
   newPassword: string = '';
   originalUser: User | null = null;
-  isEditing: boolean = false;
 
   constructor(private userService: UserService) {}
 
@@ -76,27 +76,27 @@ export class ProfileComponent implements OnInit {
       if (this.newPassword) {
         this.user.password = this.newPassword;
       }
-      this.userService.updateUser(this.user).subscribe(
-        () => {
-          location.reload();
-        }
-      );
+      console.log(this.user);
+      // this.userService.updateUser(this.user).subscribe(
+      //   () => {
+      //     location.reload();
+      //   }
+      // );
     }
   }
 
-  onCancel(): void {
-    if (this.originalUser) {
-      this.user = { ...this.originalUser };
-      this.newPassword = '';
-      this.isEditing = false;
+  isFormChanged(): boolean {
+    if (!this.user || !this.originalUser) return false;
+    return this.user.name !== this.originalUser.name || this.user.email !== this.originalUser.email || this.newPassword !== '';
+  }
+
+  isEmailValid(): boolean {
+    if (!this.user || !this.user.email) {
+      return false;
     }
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(this.user.email);
   }
 
-  isFormValid(): boolean {
-    return !!(this.user?.name && this.user?.email && this.newPassword);
-  }
-
-  startEditing(): void {
-    this.isEditing = true;
-  }
 }

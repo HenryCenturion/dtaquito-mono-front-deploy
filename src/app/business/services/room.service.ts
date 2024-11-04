@@ -39,8 +39,10 @@ export class RoomService {
   }
 
   joinPlayerList(userId: number, roomId: number): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.baseUrl}/player-lists/join?userId=${userId}&roomId=${roomId}`;
-    return this.http.post(url, {});
+    return this.http.post(url, {}, { headers });
   }
 
   createRoom(room: any): Observable<any> {
@@ -59,17 +61,18 @@ export class RoomService {
       const token = localStorage.getItem('authToken');
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       return this.http.get(`https://dtaquito-backend.azurewebsites.net/api/v1/chat/rooms/${roomId}/messages`, { headers });
+      //return this.http.get(`http://localhost:8080/api/v1/chat/rooms/${roomId}/messages`, { headers });
     }
     return of([]);
   }
 
-  sendMessage(roomId: number, message: string, userId: number): Observable<any> {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const token = localStorage.getItem('authToken');
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      const url = `https://dtaquito-backend.azurewebsites.net/api/v1/chat/rooms/${roomId}/messages?content=${encodeURIComponent(message)}&userId=${userId}`;
-      return this.http.post(url, {}, { headers });
-    }
-    return of([]);
-  }
+  // sendMessage(roomId: number, message: string, userId: number): Observable<any> {
+  //   if (typeof window !== 'undefined' && window.localStorage) {
+  //     const token = localStorage.getItem('authToken');
+  //     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  //     const url = `https://dtaquito-backend.azurewebsites.net/api/v1/chat/rooms/${roomId}/messages?content=${encodeURIComponent(message)}&userId=${userId}`;
+  //     return this.http.post(url, {}, { headers });
+  //   }
+  //   return of([]);
+  // }
 }
