@@ -92,7 +92,8 @@ export class RoomsComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private themeService: ThemeService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private googleAnalyticsService: GoogleAnalyticsService
   ) {}
 
   ngOnInit(): void {
@@ -325,6 +326,7 @@ export class RoomsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.getAllRooms();
+        this.googleAnalyticsService.event('create_room', { event_category: 'engagement', event_label: 'Room Created' });
       }
     });
   }

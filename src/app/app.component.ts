@@ -9,12 +9,13 @@ import {NgIf} from "@angular/common";
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, NgIf],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers: [GoogleAnalyticsService]
 })
 export class AppComponent {
   title = 'dtaquito';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private googleAnalyticsService: GoogleAnalyticsService) {}
 
   isAuthenticated() {
     return this.authService.isAuthenticated();
