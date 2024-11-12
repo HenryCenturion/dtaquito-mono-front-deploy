@@ -26,7 +26,7 @@ import {CreateRoomDialogComponent} from "../../components/create-room-dialog/cre
 import confetti from "canvas-confetti";
 import {ThemeService} from "../../../shared/services/theme.service";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
-
+import {GoogleAnalyticsService} from "../../../shared/services/google-analytics.service";
 
 @Component({
   selector: 'app-rooms',
