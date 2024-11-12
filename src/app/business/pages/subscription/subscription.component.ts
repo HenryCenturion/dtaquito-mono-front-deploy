@@ -4,6 +4,8 @@ import { MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { NgIf } from "@angular/common";
 import { SubscriptionService } from "../../services/subscription.service";
+import {ThemeService} from "../../../shared/services/theme.service";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-subscription',
@@ -13,22 +15,44 @@ import { SubscriptionService } from "../../services/subscription.service";
     MatTab,
     MatIconButton,
     MatIcon,
-    NgIf
+    NgIf,
+    TranslatePipe
   ],
   templateUrl: './subscription.component.html',
   styleUrl: './subscription.component.css'
 })
 export class SubscriptionComponent implements OnInit {
   currentSubscription: number = 0;
+  currentLanguage: string | undefined;
 
-  constructor(private subscriptionService: SubscriptionService) {}
+  constructor(
+    private subscriptionService: SubscriptionService,
+    private themeService: ThemeService,
+    private translateService: TranslateService) {}
 
   ngOnInit(): void {
+    this.setCurrentTheme();
+    this.currentLanguage = this.translateService.currentLang;
+    this.translateService.onLangChange.subscribe((event: any) => {
+      this.currentLanguage = event.lang;
+    });
     if (typeof window !== 'undefined') {
       window.addEventListener('message', this.handlePaymentMessage.bind(this), false);
     }
     this.getUserSubscription();
 
+  }
+
+  setCurrentTheme(): void {
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      if (typeof document !== 'undefined') {
+        if (isDarkMode) {
+          document.body.classList.add('dark-theme');
+        } else {
+          document.body.classList.remove('dark-theme');
+        }
+      }
+    });
   }
 
 

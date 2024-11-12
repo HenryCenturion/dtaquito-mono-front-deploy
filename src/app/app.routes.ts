@@ -9,6 +9,8 @@ import {RoomsComponent} from "./business/pages/rooms/rooms.component";
 import {ProfileComponent} from "./business/pages/profile/profile.component";
 import {RoomDetailComponent} from "./business/pages/room-detail/room-detail.component";
 import {AuthGuard} from "./shared/services/auth.guard";
+import {CorrectPaymentComponent} from "./public/pages/correct-payment/correct-payment.component";
+import {ErrorPaymentComponent} from "./public/pages/error-payment/error-payment.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,5 +22,7 @@ export const routes: Routes = [
   { path: 'rooms', component: RoomsComponent, canActivate: [AuthGuard] },
   { path: 'room-detail/:id', component: RoomDetailComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
+  { path: 'correct-payment', component: CorrectPaymentComponent },
+  { path: 'error-payment', component: ErrorPaymentComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

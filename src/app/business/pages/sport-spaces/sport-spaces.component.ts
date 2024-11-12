@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit} from '@angular/core';
 import {NgClass, NgForOf, NgIf, NgOptimizedImage, TitleCasePipe} from "@angular/common";
 import {
   MatCard,
@@ -21,6 +21,9 @@ import {MatOption, MatSelect} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import confetti from 'canvas-confetti';
+import {ThemeService} from "../../../shared/services/theme.service";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {classNames} from "@angular/cdk/schematics";
 
 @Component({
   selector: 'app-sport-spaces',
@@ -44,7 +47,8 @@ import confetti from 'canvas-confetti';
     MatInput,
     MatLabel,
     TitleCasePipe,
-    NgClass
+    NgClass,
+    TranslatePipe
   ],
   templateUrl: './sport-spaces.component.html',
   styleUrl: './sport-spaces.component.css'
@@ -70,21 +74,47 @@ export class SportSpacesComponent implements OnInit {
     { id: 2, name: 'Billiards' }
   ];
   districts = [
-    'San_Miguel', 'San_Borja', 'San_Isidro', 'Surco', 'Magdalena', 'Pueblo_Libre', 'Miraflores', 'Barranco', 'La_Molina',
-    'Jesus_Maria', 'Lince', 'Cercado_de_Lima', 'Chorrillos'
+    'San Miguel', 'San Borja', 'San Isidro', 'Surco', 'Magdalena', 'Pueblo Libre', 'Miraflores', 'Barranco', 'La Molina',
+    'Jesus Maria', 'Lince', 'Chorrillos'
   ];
   gamemodes: string[] = [];
+  cooldown = false;
+  lastShapeIndex = 0;
+  isDarkMode: boolean = false;
+  currentLanguage: string | undefined;
 
   constructor(
     private sportSpaceService: SportSpaceService,
     private userService: UserService,
     private subscriptionService: SubscriptionService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private themeService: ThemeService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.setCurrentTheme();
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
+    this.currentLanguage = this.translateService.currentLang;
+    this.translateService.onLangChange.subscribe((event: any) => {
+      this.currentLanguage = event.lang;
+    });
     this.loadSportSpaces();
     this.updateGamemodes();
+  }
+
+  setCurrentTheme(): void {
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      if (typeof document !== 'undefined') {
+        if (isDarkMode) {
+          document.body.classList.add('dark-theme');
+        } else {
+          document.body.classList.remove('dark-theme');
+        }
+      }
+    });
   }
 
   loadSportSpaces(): void {
@@ -117,7 +147,6 @@ export class SportSpacesComponent implements OnInit {
   private updateCanAddMoreSportSpaces(userId: string): void {
     this.subscriptionService.getSubscriptionbyUserId(userId).subscribe(
       (data: any) => {
-        console.log(data);
         this.userSubscriptionData = data;
         this.maxSportSpaces = this.getMaxSportSpaces(data.planType);
         this.canAddMoreSportSpaces = this.sportSpaces.length < this.maxSportSpaces;
@@ -130,6 +159,10 @@ export class SportSpacesComponent implements OnInit {
       return localStorage.getItem('userId');
     }
     return null;
+  }
+
+  getDisplayDistricts(): string[] {
+    return this.districts.map(district => district.replace(/_/g, ' '));
   }
 
   private getMaxSportSpaces(planType: string): number {
@@ -212,20 +245,29 @@ export class SportSpacesComponent implements OnInit {
     return gamemode.replace('_', ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
   }
 
-  cooldown = false;
-
   celebrate() {
+    let scalar = 3;
+    let shapes = [
+      confetti.shapeFromText({ text: '⚽', scalar }),
+      confetti.shapeFromText({ text: '🎱', scalar })
+    ];
+
     if (this.cooldown) {
       return;
     }
 
     this.cooldown = true;
-    const duration = 3300;
+    const duration = 6000;
+
+    let randomShape = shapes[this.lastShapeIndex];
+    this.lastShapeIndex = (this.lastShapeIndex + 1) % shapes.length;
 
     confetti({
-      particleCount: 100,
+      particleCount: 80,
       spread: 160,
       origin: { y: 0.37 },
+      shapes: [randomShape],
+      scalar
     });
 
     setTimeout(() => {

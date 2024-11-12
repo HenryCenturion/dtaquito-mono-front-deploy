@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
-import { Router } from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import { MatFormField } from "@angular/material/form-field";
 import { MatInput, MatInputModule } from "@angular/material/input";
-import { NgIf } from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
 import { MatOption, MatSelect } from "@angular/material/select";
 import { MatButton } from "@angular/material/button";
+import {MatIcon} from "@angular/material/icon";
+import {ThemeService} from "../../../shared/services/theme.service";
+import {TranslationService} from "../../../shared/services/translation.service";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-register',
@@ -20,7 +24,11 @@ import { MatButton } from "@angular/material/button";
     NgIf,
     MatSelect,
     MatOption,
-    MatButton
+    MatButton,
+    RouterLink,
+    MatIcon,
+    NgClass,
+    TranslatePipe
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
@@ -33,11 +41,48 @@ export class RegisterComponent implements OnInit {
   subscriptionFormControl = new FormControl('', [Validators.required]);
   bankAccountFormControl = new FormControl('', [Validators.required, Validators.email]);
   errorMessage: string | null = null;
+  language: string = 'en';
+  isDarkMode = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService,
+              private router: Router,
+              private themeService: ThemeService,
+              private translationService: TranslationService) {
+  }
 
   ngOnInit() {
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+      this.applyTheme();
+    });
+    if (typeof localStorage !== 'undefined') {
+      this.language = localStorage.getItem('language') || 'en';
+    } else {
+      this.language = 'en';
+    }
     this.subscriptionFormControl.disable();
+  }
+
+  toggleDarkMode() {
+    this.themeService.toggleDarkMode();
+  }
+
+  changeLanguage(): void {
+    this.language = this.language === 'en' ? 'es' : 'en';
+    localStorage.setItem('language', this.language);
+    this.translationService.setLanguage(this.language);
+  }
+
+  applyTheme(): void {
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      if (typeof document !== 'undefined') {
+        if (isDarkMode) {
+          document.body.classList.add('dark');
+        } else {
+          document.body.classList.remove('dark');
+        }
+      }
+    });
   }
 
   onSubmit() {

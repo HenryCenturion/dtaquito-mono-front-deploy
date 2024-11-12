@@ -9,6 +9,10 @@ import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } fr
 import { FormsModule } from "@angular/forms";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
+import {ThemeService} from "../../../shared/services/theme.service";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {AuthService} from "../../../iam/services/auth.service";
+import {TranslationService} from "../../../shared/services/translation.service";
 
 @Component({
   selector: 'app-profile',
@@ -26,7 +30,8 @@ import { MatInput } from "@angular/material/input";
     MatFormField,
     MatLabel,
     MatInput,
-    NgClass
+    NgClass,
+    TranslatePipe
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -35,10 +40,24 @@ export class ProfileComponent implements OnInit {
   user: User | null = null;
   newPassword: string = '';
   originalUser: User | null = null;
+  language: string = 'en';
+  isDarkMode = false;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private themeService: ThemeService,
+    private translationService: TranslationService) {}
 
   ngOnInit(): void {
+
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+      this.applyTheme();
+    });
+
+    this.language = localStorage.getItem('language') || 'en';
+
     const userId = this.getUserIdFromLocalStorage();
     if (userId) {
       this.userService.getUserById(userId).subscribe(
@@ -51,6 +70,29 @@ export class ProfileComponent implements OnInit {
         }
       );
     }
+  }
+
+  toggleDarkMode() {
+    this.themeService.toggleDarkMode();
+  }
+
+  changeLanguage(): void {
+    this.language = this.language === 'en' ? 'es' : 'en';
+    localStorage.setItem('language', this.language);
+    this.translationService.setLanguage(this.language);
+  }
+
+
+  applyTheme(): void {
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      if (typeof document !== 'undefined') {
+        if (isDarkMode) {
+          document.body.classList.add('dark');
+        } else {
+          document.body.classList.remove('dark');
+        }
+      }
+    });
   }
 
   private getUserIdFromLocalStorage(): string | null {
@@ -99,4 +141,7 @@ export class ProfileComponent implements OnInit {
     return emailPattern.test(this.user.email);
   }
 
+  logout() {
+    this.authService.logout();
+  }
 }

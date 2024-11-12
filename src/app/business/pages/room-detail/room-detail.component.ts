@@ -21,6 +21,8 @@ import {format, toZonedTime} from "date-fns-tz";
 import {WebSocketService} from "../../../shared/services/websocket.service";
 import {ChatService} from "../../services/chat.service";
 import {Observable} from "rxjs";
+import {ThemeService} from "../../../shared/services/theme.service";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-room-detail',
@@ -39,7 +41,8 @@ import {Observable} from "rxjs";
     FormsModule,
     MatButton,
     MatIcon,
-    NgClass
+    NgClass,
+    TranslatePipe
   ],
   templateUrl: './room-detail.component.html',
   styleUrl: './room-detail.component.css',
@@ -57,14 +60,41 @@ export class RoomDetailComponent implements OnInit {
   detailsExpanded: boolean = false;
   emojis: string[] = ['😀', '😂', '😍', '😢', '😡', '👍', '🎉', '❤️'];
   userDataMessage: any;
+  isSidebarOpen: boolean = true;
+  isSidebarVisible: boolean = true;
+  currentLanguage: string | undefined;
+  isDarkMode: boolean = false;
+  isSmallScreen: boolean = window.innerWidth <= 800;
+
 
   constructor(
     private route: ActivatedRoute,
     private roomService: RoomService,
     private userService: UserService,
     private chatService: ChatService,
-    wsService: WebSocketService
-  ) {}
+    private themeService: ThemeService,
+    private translateService: TranslateService
+  ) {
+    window.addEventListener('resize', this.checkWindowSize.bind(this));
+  }
+
+
+  ngOnInit(): void {
+    this.setCurrentTheme();
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
+    this.currentLanguage = this.translateService.currentLang;
+    this.translateService.onLangChange.subscribe((event: any) => {
+      this.currentLanguage = event.lang;
+    });
+    this.checkWindowSize();
+    this.getUser();
+    this.getRoomDetails();
+    this.getPlayerList();
+    this.getRoomChat();
+    this.subscribeToMessages();
+  }
 
   scrollToBottom(): void {
     if (this.lastMessage) {
@@ -74,14 +104,25 @@ export class RoomDetailComponent implements OnInit {
     }
   }
 
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
+  }
 
+  setCurrentTheme(): void {
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      if (typeof document !== 'undefined') {
+        if (isDarkMode) {
+          document.body.classList.add('dark-theme');
+        } else {
+          document.body.classList.remove('dark-theme');
+        }
+      }
+    });
+  }
 
-  ngOnInit(): void {
-    this.getUser();
-    this.getRoomDetails();
-    this.getPlayerList();
-    this.getRoomChat();
-    this.subscribeToMessages();
+  checkWindowSize() {
+    this.isSidebarVisible = window.innerWidth >= 1024;
+    this.isSmallScreen = window.innerWidth <= 800;
   }
 
   getUser(): void {

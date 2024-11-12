@@ -14,6 +14,9 @@ import {
 } from "../../../business/components/create-deposit-dialog/create-deposit-dialog.component";
 import {MatSidenav} from "@angular/material/sidenav";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
+import {ThemeService} from "../../services/theme.service";
+import {TranslationService} from "../../services/translation.service";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-header',
@@ -27,13 +30,16 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
     NgIf,
     MatMenuTrigger,
     MatMenu,
-    MatMenuItem
+    MatMenuItem,
+    TranslatePipe
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
 
+  language: string = 'en';
+  isDarkMode = false;
   currentUser: User | null = null;
   userData: any | undefined;
   dataOwner: boolean = false;
@@ -42,9 +48,19 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private userService: UserService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private themeService: ThemeService,
+              private translationService: TranslationService) {}
 
   ngOnInit(): void {
+
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+      this.applyTheme();
+    });
+
+    this.language = localStorage.getItem('language') || 'en';
+
     // Verifica si hay un token en el localStorage al iniciar
     const token = this.authService.getToken();
     if (token && this.authService.isAuthenticated()) {
@@ -55,9 +71,9 @@ export class HeaderComponent implements OnInit {
     this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
       if (user) {
-        this.getUser(); // Llama a getUser() si hay un usuario autenticado
+        this.getUser();
       } else {
-        this.userData = null; // Limpia los datos si no hay usuario
+        this.userData = null;
         this.dataOwner = false;
         this.dataPlayer = false;
         this.userCredits = 0;
@@ -65,10 +81,27 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  toggleDarkMode() {
+    this.themeService.toggleDarkMode();
+  }
+
+  changeLanguage(): void {
+    this.language = this.language === 'en' ? 'es' : 'en';
+    localStorage.setItem('language', this.language);
+    this.translationService.setLanguage(this.language);
+  }
 
 
-  logout() {
-    this.authService.logout();
+  applyTheme(): void {
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      if (typeof document !== 'undefined') {
+        if (isDarkMode) {
+          document.body.classList.add('dark');
+        } else {
+          document.body.classList.remove('dark');
+        }
+      }
+    });
   }
 
   isAuthenticated() {

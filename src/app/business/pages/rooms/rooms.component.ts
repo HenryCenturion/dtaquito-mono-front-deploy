@@ -24,6 +24,8 @@ import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {CreateRoomDialogComponent} from "../../components/create-room-dialog/create-room-dialog.component";
 import confetti from "canvas-confetti";
+import {ThemeService} from "../../../shared/services/theme.service";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -49,7 +51,8 @@ import confetti from "canvas-confetti";
     MatInput,
     MatLabel,
     NgClass,
-    TitleCasePipe
+    TitleCasePipe,
+    TranslatePipe
   ],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.css'
@@ -69,26 +72,53 @@ export class RoomsComponent implements OnInit {
   };
 
   sports = [
-    { id: 1, name: 'FUTBOL' },
-    { id: 2, name: 'BILLAR' }
+    { id: 1, name: 'Football' },
+    { id: 2, name: 'Billiards' }
   ];
   districts = [
-    'San_Miguel', 'San_Borja', 'San_Isidro', 'Surco', 'Magdalena', 'Pueblo_Libre', 'Miraflores', 'Barranco', 'La_Molina',
-    'Jesus_Maria', 'Lince', 'Cercado_de_Lima', 'Chorrillos'
+    'San Miguel', 'San Borja', 'San Isidro', 'Surco', 'Magdalena', 'Pueblo Libre', 'Miraflores', 'Barranco', 'La Molina',
+    'Jesus Maria', 'Lince', 'Chorrillos'
   ];
   gamemodes: string[] = [];
+  isDarkMode: boolean = false;
+  cooldown = false;
+  lastShapeIndex = 0;
+  currentLanguage: string | undefined;
+
 
   constructor(
     private roomService: RoomService,
     private userService: UserService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private themeService: ThemeService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.setCurrentTheme();
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      this.isDarkMode = isDarkMode;
+    });
+    this.currentLanguage = this.translateService.currentLang;
+    this.translateService.onLangChange.subscribe((event: any) => {
+      this.currentLanguage = event.lang;
+    });
     this.getUser();
     this.getAllRooms();
     this.updateGamemodes();
+  }
+
+  setCurrentTheme(): void {
+    this.themeService.isDarkMode$.subscribe(isDarkMode => {
+      if (typeof document !== 'undefined') {
+        if (isDarkMode) {
+          document.body.classList.add('dark-theme');
+        } else {
+          document.body.classList.remove('dark-theme');
+        }
+      }
+    });
   }
 
   getAllRooms(): void {
@@ -108,6 +138,10 @@ export class RoomsComponent implements OnInit {
   }
 
   applyFilters(): void {
+    if (this.filter.sportId === 2) {
+      this.filter.gamemode = 'BILLAR_3';
+    }
+    this.updateGamemodes();
     this.filteredRooms = this.rooms.filter(room => {
       return (!this.filter.sportId || room.sportSpace.sportId === this.filter.sportId) &&
         (!this.filter.gamemode || room.sportSpace.gamemode === this.filter.gamemode) &&
@@ -247,6 +281,7 @@ export class RoomsComponent implements OnInit {
             (response: any) => {
               if (response.message === "Player added to room and chat successfully") {
                 this.viewRoom(roomId);
+                setTimeout(() => window.location.reload(), 600);
               }
             },
             (error: any) => {
@@ -302,24 +337,22 @@ export class RoomsComponent implements OnInit {
     this.isFilterMenuOpen = !this.isFilterMenuOpen;
   }
 
-  cooldown = false;
-
-
-
   celebrate() {
     let scalar = 3;
     let shapes = [
       confetti.shapeFromText({ text: '⚽', scalar }),
       confetti.shapeFromText({ text: '🎱', scalar })
     ];
-    let randomShape = shapes[Math.floor(Math.random() * shapes.length)];
 
     if (this.cooldown) {
       return;
     }
 
     this.cooldown = true;
-    const duration = 3300;
+    const duration = 6000;
+
+    let randomShape = shapes[this.lastShapeIndex];
+    this.lastShapeIndex = (this.lastShapeIndex + 1) % shapes.length;
 
     confetti({
       particleCount: 80,

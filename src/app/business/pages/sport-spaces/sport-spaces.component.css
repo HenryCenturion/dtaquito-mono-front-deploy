@@ -123,84 +123,26 @@ button.clear-filters:hover {
   background-color: #ffeb3b;
   color: #333;
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 25px;
   text-align: center;
   font-size: 1.2rem;
   font-weight: bold;
-  margin: 20px 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 40%;
+  margin: 60px auto;
 }
 
 
 
-@media (max-width: 768px) {
-  .filter-menu-toggle {
-    display: inline-block;
-  }
-
-  .filters-content {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
-  }
-  button.clear-filters{
-    border-radius: 30px;
-    height: 60px;
-    width: fit-content;
-    margin: 0 auto;
-  }
-
-  .filters-content.open {
-    max-height: 500px;
-  }
-
-  .title-gif-futbol {
-    width: 90px;
-    height: 75px;
-    margin: 0 20px;
-  }
-
-  .title-gif-billar {
-    width: 75px;
-    height: 75px;
-    margin: 0 20px;
-  }
-}
-
-@media (max-width: 560px) {
-  .title-gif-futbol {
-    width: 70px;
-    height: 60px;
-    margin: 0 10px;
-  }
-  .title-gif-billar {
-    width: 60px;
-    height: 60px;
-    margin: 0 10px;
-  }
-
-}
-
-@media (max-width: 480px) {
-  .filter-menu-toggle {
-    width: 200px;
-  }
-}
-
-@media (max-width: 360px) {
-  .filter-menu-toggle{
-    width: 150px;
-    margin: 0 auto;
-  }
-}
 
 .type--B {
   --line_color: #14342B;
   --back_color: #65bf7d;
+}
+
+.dark-theme-button-type--B {
+  --line_color: #032123;
+  --back_color: #658d9c;
 }
 
 .custom-button {
@@ -221,6 +163,26 @@ button.clear-filters:hover {
   align-items: center;
   margin: auto;
 }
+
+.dark-theme-button-custom-button {
+  position: relative;
+  background-color: #86cfec;
+  border-radius: 40px;
+  z-index: 0;
+  width: 240px;
+  height: 56px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 2px;
+  transition: all .3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto auto 40px;
+}
+
 .custom-button__text {
   display: flex;
   justify-content: center;
@@ -415,3 +377,73 @@ button.clear-filters:hover {
   100% { width: 124px; }
 }
 
+@media (max-width: 768px) {
+  .filter-menu-toggle {
+    display: inline-block;
+  }
+
+  .filters-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+  button.clear-filters{
+    border-radius: 30px;
+    height: 60px;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  .filters-content.open {
+    max-height: 500px;
+  }
+
+  .title-gif-futbol {
+    width: 90px;
+    height: 75px;
+    margin: 0 20px;
+  }
+
+  .title-gif-billar {
+    width: 75px;
+    height: 75px;
+    margin: 0 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .title-gif-futbol {
+    width: 70px;
+    height: 60px;
+    margin: 0 10px;
+  }
+  .title-gif-billar {
+    width: 60px;
+    height: 60px;
+    margin: 0 10px;
+  }
+
+}
+
+@media (max-width: 500px) {
+  .hide-gif {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-menu-toggle {
+    width: 200px;
+  }
+}
+
+@media (max-width: 360px) {
+  .filter-menu-toggle{
+    width: 150px;
+    margin: 0 auto;
+  }
+}

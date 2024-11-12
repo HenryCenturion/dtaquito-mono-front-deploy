@@ -19,6 +19,7 @@ import {
   MatNativeDateModule,
   NativeDateAdapter
 } from "@angular/material/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-create-room-dialog',
@@ -29,7 +30,8 @@ import {
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './create-room-dialog.component.html',
   styleUrl: './create-room-dialog.component.css',
@@ -39,12 +41,14 @@ export class CreateRoomDialogComponent implements OnInit {
   createRoomForm: FormGroup;
   userData: any;
   minDate: Date | undefined;
+  currentLanguage: string | undefined;
 
   constructor(
     private fb: FormBuilder,
     private roomService: RoomService,
     private userService: UserService,
-    private dialogRef: MatDialogRef<CreateRoomDialogComponent>
+    private dialogRef: MatDialogRef<CreateRoomDialogComponent>,
+    private translateService: TranslateService
   ) {
     this.createRoomForm = this.fb.group({
       roomName: ['', Validators.required],
@@ -57,6 +61,10 @@ export class CreateRoomDialogComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.minDate = new Date();
+    this.currentLanguage = this.translateService.currentLang;
+    this.translateService.onLangChange.subscribe((event: any) => {
+      this.currentLanguage = event.lang;
+    });
   }
 
   getUser(): void {
@@ -95,11 +103,15 @@ export class CreateRoomDialogComponent implements OnInit {
         day: formValues.openingTime
       };
 
-
       this.roomService.createRoom(roomData).subscribe(response => {
         this.dialogRef.close();
         window.location.reload();
       });
     }
+  }
+
+  onCancel(): void {
+    document.getElementById('hs-scale-animation-modal')?.classList.add('hidden');
+    this.dialogRef.close(false);
   }
 }
