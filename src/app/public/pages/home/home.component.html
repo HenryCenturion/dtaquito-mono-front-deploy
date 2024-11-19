@@ -8,7 +8,7 @@
       <div class="absolute bg-gradient-to-b from-blue-900 to-gray-900 opacity-75 inset-0 z-0"></div>
       <div class="absolute min-h-screen right-0 w-16" [ngClass]="isDarkMode ? 'triangle-dark' : 'triangle'"></div>
       <a *ngIf="!isAuthenticated() && (!dataOwner || !dataPlayer)" href="" target="_blank" title="dtaquito" class="flex absolute top-5 text-center text-gray-100 focus:outline-none"><img src="assets/images/dtaquito_logo.png" alt="aji" class="object-cover mx-auto  rounded-full w-10 h-10"><p class="text-xl ml-3"><strong>Dtaquito</strong></p> </a>
-      <img src="assets/images/pelotin.png" class="h-96 absolute right-5 mr-5 hide-on-small">
+      <img src="assets/images/pelotin.png" class="h-96 absolute right-5 mr-5 hide-on-small" alt="Imagen de pelota de futbol">
       <div class="w-full  max-w-md z-10">
         <div class="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6 text-gray-100 dark:text-gray-200">
           {{ 'principalPage.nextGame' | translate }}
@@ -56,11 +56,11 @@
           <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ 'principalPage.ownerMessage' | translate }}</p>
         </div>
         <div *ngIf="!isAuthenticated() && (!dataOwner || !dataPlayer)" class="flex flex-row justify-center items-center space-x-3">
-          <a (click)="toggleDarkMode()" class="w-11 h-11 items-center justify-center inline-flex rounded-2xl font-bold text-lg bg-gray-600 text-white dark:bg-amber-500 hover:shadow-lg cursor-pointer transition ease-in duration-300"><mat-icon class="relative z-10 hover:text-white">{{ isDarkMode ? 'wb_sunny' : 'brightness_2' }}</mat-icon></a>
-          <a (click)="changeLanguage()" target="_blank" class="w-11 h-11 bg-[#5BC0EB] items-center justify-center inline-flex rounded-2xl font-bold text-lg text-white hover:shadow-lg cursor-pointer transition ease-in duration-300">
-            <span *ngIf="language === 'es'" class="flag-icon flag-icon-us h-6 w-6"></span>
-            <span *ngIf="language !== 'es'" class="flag-icon flag-icon-pe h-6 w-6"></span>
-          </a>
+<!--          <a (click)="toggleDarkMode()" class="w-11 h-11 items-center justify-center inline-flex rounded-2xl font-bold text-lg bg-gray-600 text-white dark:bg-amber-500 hover:shadow-lg cursor-pointer transition ease-in duration-300"><mat-icon class="relative z-10 hover:text-white">{{ isDarkMode ? 'wb_sunny' : 'brightness_2' }}</mat-icon></a>-->
+<!--          <a (click)="changeLanguage()" target="_blank" class="w-11 h-11 bg-[#5BC0EB] items-center justify-center inline-flex rounded-2xl font-bold text-lg text-white hover:shadow-lg cursor-pointer transition ease-in duration-300">-->
+<!--            <span *ngIf="language === 'es'" class="flag-icon flag-icon-us h-6 w-6"></span>-->
+<!--            <span *ngIf="language !== 'es'" class="flag-icon flag-icon-pe h-6 w-6"></span>-->
+<!--          </a>-->
         </div>
         <div class="flex items-center justify-center space-x-2">
           <span class="h-px w-56 bg-gray-200 dark:bg-gray-700"></span>

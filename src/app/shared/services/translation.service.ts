@@ -13,11 +13,11 @@ export class TranslationService {
   initializeLanguage() {
     // Verifica si estamos en un entorno de cliente (navegador)
     if (typeof window !== 'undefined') {
-      const language = localStorage.getItem('language') || 'en';
+      const language = localStorage.getItem('language') || 'es';
       this.setLanguage(language);
     } else {
       // Si no estamos en el navegador, usa el idioma predeterminado
-      this.setLanguage('en');
+      this.setLanguage('es');
     }
   }
 

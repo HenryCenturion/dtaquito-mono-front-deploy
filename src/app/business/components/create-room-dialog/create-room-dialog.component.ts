@@ -2,15 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {RoomService} from "../../services/room.service";
 import {MatDialogRef} from "@angular/material/dialog";
-import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
-import {MatInput, MatInputModule} from "@angular/material/input";
-import {MatButton, MatButtonModule} from "@angular/material/button";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
 import {UserService} from "../../services/user.service";
 import {
-  MatDatepicker,
-  MatDatepickerInput,
   MatDatepickerModule,
-  MatDatepickerToggle
 } from "@angular/material/datepicker";
 import {
   DateAdapter,
@@ -20,6 +17,7 @@ import {
   NativeDateAdapter
 } from "@angular/material/core";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-create-room-dialog',
@@ -68,7 +66,7 @@ export class CreateRoomDialogComponent implements OnInit {
   }
 
   getUser(): void {
-    const userId = this.getUserIdFromLocalStorage();
+    const userId = this.getUserIdFromJwt();
     if (userId) {
       this.userService.getUserById(userId).subscribe(
         (data: any) => {
@@ -78,9 +76,13 @@ export class CreateRoomDialogComponent implements OnInit {
     }
   }
 
-  private getUserIdFromLocalStorage(): string | null {
+  private getUserIdFromJwt(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('userId');
+      const token = localStorage.getItem('authToken'); // Usando la clave 'authToken'
+      if (token) {
+        const decoded: any = jwtDecode(token);
+        return decoded.userId || null; // Ajusta esto según la estructura de tu token
+      }
     }
     return null;
   }
@@ -103,7 +105,7 @@ export class CreateRoomDialogComponent implements OnInit {
         day: formValues.openingTime
       };
 
-      this.roomService.createRoom(roomData).subscribe(response => {
+      this.roomService.createRoom(roomData).subscribe(() => {
         this.dialogRef.close();
         window.location.reload();
       });

@@ -21,52 +21,52 @@
   <div class="custom-button__drow2"></div>
 </button>
 
-<div class="filters-container">
-  <button class="filter-menu-toggle" (click)="toggleFilterMenu()">
-    {{ 'roomPage.filters' | translate }}
-    <i [ngClass]="{'fa-chevron-down': !isFilterMenuOpen, 'fa-chevron-up': isFilterMenuOpen}" class="fas"></i>
-  </button>
-  <div class="filters-content" [ngClass]="{'open': isFilterMenuOpen}">
-    <mat-form-field>
-      <mat-label>{{ 'roomPage.sport' | translate }}</mat-label>
-      <mat-select [(ngModel)]="filter.sportId" (selectionChange)="applyFilters()">
-        <mat-option *ngFor="let sport of sports" [value]="sport.id">{{ sport.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+<!--<div class="filters-container">-->
+<!--  <button class="filter-menu-toggle" (click)="toggleFilterMenu()">-->
+<!--    {{ 'roomPage.filters' | translate }}-->
+<!--    <i [ngClass]="{'fa-chevron-down': !isFilterMenuOpen, 'fa-chevron-up': isFilterMenuOpen}" class="fas"></i>-->
+<!--  </button>-->
+<!--  <div class="filters-content" [ngClass]="{'open': isFilterMenuOpen}">-->
+<!--    <mat-form-field>-->
+<!--      <mat-label>{{ 'roomPage.sport' | translate }}</mat-label>-->
+<!--      <mat-select [(ngModel)]="filter.sportId" (selectionChange)="applyFilters()">-->
+<!--        <mat-option *ngFor="let sport of sports" [value]="sport.id">{{ sport.name }}</mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
 
-    <mat-form-field>
-      <mat-label>{{ 'roomPage.gamemode' | translate }}</mat-label>
-      <mat-select [(ngModel)]="filter.gamemode" (selectionChange)="applyFilters()">
-        <mat-option *ngFor="let gamemode of gamemodes" [value]="gamemode">
-          {{ transformGamemode(gamemode) }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<!--    <mat-form-field>-->
+<!--      <mat-label>{{ 'roomPage.gamemode' | translate }}</mat-label>-->
+<!--      <mat-select [(ngModel)]="filter.gamemode" (selectionChange)="applyFilters()">-->
+<!--        <mat-option *ngFor="let gamemode of gamemodes" [value]="gamemode">-->
+<!--          {{ transformGamemode(gamemode) }}-->
+<!--        </mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
 
-    <mat-form-field>
-      <mat-label>{{ 'roomPage.district' | translate }}</mat-label>
-      <mat-select [(ngModel)]="filter.district" (selectionChange)="applyFilters()">
-        <mat-option *ngFor="let district of districts" [value]="district">
-          {{ district.replace('_', ' ') | titlecase }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<!--    <mat-form-field>-->
+<!--      <mat-label>{{ 'roomPage.district' | translate }}</mat-label>-->
+<!--      <mat-select [(ngModel)]="filter.district" (selectionChange)="applyFilters()">-->
+<!--        <mat-option *ngFor="let district of districts" [value]="district">-->
+<!--          {{ district.replace('_', ' ') | titlecase }}-->
+<!--        </mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
 
-    <mat-form-field>
-      <mat-label>{{ 'roomPage.minAdvance' | translate }}</mat-label>
-      <input matInput type="number" [(ngModel)]="filter.minAmount" (input)="applyFilters()">
-    </mat-form-field>
+<!--    <mat-form-field>-->
+<!--      <mat-label>{{ 'roomPage.minAdvance' | translate }}</mat-label>-->
+<!--      <input matInput type="number" [(ngModel)]="filter.minAmount" (input)="applyFilters()">-->
+<!--    </mat-form-field>-->
 
-    <mat-form-field>
-      <mat-label>{{ 'roomPage.maxAdvance' | translate }}</mat-label>
-      <input matInput type="number" [(ngModel)]="filter.maxAmount" (input)="applyFilters()">
-    </mat-form-field>
+<!--    <mat-form-field>-->
+<!--      <mat-label>{{ 'roomPage.maxAdvance' | translate }}</mat-label>-->
+<!--      <input matInput type="number" [(ngModel)]="filter.maxAmount" (input)="applyFilters()">-->
+<!--    </mat-form-field>-->
 
-    <button class="clear-filters" (click)="clearFilters()">
-      <i class="fa-solid fa-filter-circle-xmark"></i>
-    </button>
-  </div>
-</div>
+<!--    <button class="clear-filters" (click)="clearFilters()">-->
+<!--      <i class="fa-solid fa-filter-circle-xmark"></i>-->
+<!--    </button>-->
+<!--  </div>-->
+<!--</div>-->
 
 <section class="container mx-auto p-5 md:p-10">
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">

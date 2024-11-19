@@ -16,13 +16,16 @@
       <form [formGroup]="depositForm" class="p-4">
         <div class="mb-4">
           <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-neutral-400">{{ 'createDepositDialog.amountLabel' | translate }}</label>
-          <input id="amount" type="text" formControlName="amount" class="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white" />
-          <div *ngIf="depositForm.get('amount')?.dirty && depositForm.get('amount')?.hasError('min')" class="text-sm text-red-500">
-            {{ 'createDepositDialog.amountMinError' | translate }}
+          <div class="flex items-center">
+            <input id="amount" type="text" formControlName="amount" class="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white" />
+            <img src="assets/images/paypal.png" alt="PayPal Logo" class="w-16 ml-4">
           </div>
-          <div *ngIf="depositForm.get('amount')?.dirty && depositForm.get('amount')?.hasError('required')" class="text-sm text-red-500">
-            {{ 'createDepositDialog.amountRequiredError' | translate }}
-          </div>
+        </div>
+        <div *ngIf="depositForm.get('amount')?.dirty && depositForm.get('amount')?.hasError('min')" class="text-sm text-red-500">
+          {{ 'createDepositDialog.amountMinError' | translate }}
+        </div>
+        <div *ngIf="depositForm.get('amount')?.dirty && depositForm.get('amount')?.hasError('required')" class="text-sm text-red-500">
+          {{ 'createDepositDialog.amountRequiredError' | translate }}
         </div>
         <div class="flex justify-end gap-x-2 py-3 pl-4 dark:border-neutral-700">
           <button (click)="onCancel()" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">

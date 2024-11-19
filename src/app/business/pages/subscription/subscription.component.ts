@@ -1,20 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import { MatTab, MatTabGroup } from "@angular/material/tabs";
-import { MatIconButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
 import { NgIf } from "@angular/common";
 import { SubscriptionService } from "../../services/subscription.service";
 import {ThemeService} from "../../../shared/services/theme.service";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-subscription',
   standalone: true,
   imports: [
-    MatTabGroup,
-    MatTab,
-    MatIconButton,
-    MatIcon,
     NgIf,
     TranslatePipe
   ],
@@ -57,7 +51,7 @@ export class SubscriptionComponent implements OnInit {
 
 
   getUserSubscription(): void {
-    const userId = this.getUserIdFromLocalStorage();
+    const userId = this.getUserIdFromJwt();
     if (userId) {
       this.subscriptionService.getSubscriptionbyUserId(userId).subscribe(
         (data: any) => {
@@ -67,15 +61,19 @@ export class SubscriptionComponent implements OnInit {
     }
   }
 
-  private getUserIdFromLocalStorage(): string | null {
+  private getUserIdFromJwt(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('userId');
+      const token = localStorage.getItem('authToken'); // Usando la clave 'authToken'
+      if (token) {
+        const decoded: any = jwtDecode(token);
+        return decoded.userId || null; // Ajusta esto según la estructura de tu token
+      }
     }
     return null;
   }
 
   updateSubscription(plan: string): void {
-    const userId = this.getUserIdFromLocalStorage();
+    const userId = this.getUserIdFromJwt();
     if (userId) {
       this.subscriptionService.updateSubscription(userId, plan);
     }

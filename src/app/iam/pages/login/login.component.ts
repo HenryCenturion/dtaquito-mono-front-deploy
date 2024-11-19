@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MatFormField} from "@angular/material/form-field";
-import {MatInput, MatInputModule} from "@angular/material/input";
+import {MatInputModule} from "@angular/material/input";
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
 import {AuthService} from "../../services/auth.service";
-import {MatButton} from "@angular/material/button";
 import {Router, RouterLink} from "@angular/router";
-import {MatIcon} from "@angular/material/icon";
 import {ThemeService} from "../../../shared/services/theme.service";
 import {TranslationService} from "../../../shared/services/translation.service";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -15,15 +12,11 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'app-login',
   standalone: true,
   imports: [
-    MatFormField,
-    MatInput,
     ReactiveFormsModule,
     MatInputModule,
     FormsModule,
     NgIf,
-    MatButton,
     RouterLink,
-    MatIcon,
     NgClass,
     TranslatePipe
   ],
@@ -33,7 +26,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 export class LoginComponent implements OnInit {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl ('', [Validators.required]);
-  language: string = 'en';
+  language: string = 'es';
   isDarkMode = false;
 
   constructor(private authService: AuthService,
@@ -48,9 +41,9 @@ export class LoginComponent implements OnInit {
       this.applyTheme();
     });
     if (typeof localStorage !== 'undefined') {
-      this.language = localStorage.getItem('language') || 'en';
+      this.language = localStorage.getItem('language') || 'es';
     } else {
-      this.language = 'en';
+      this.language = 'es';
     }
   }
 

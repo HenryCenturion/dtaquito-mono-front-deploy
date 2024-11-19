@@ -1,55 +1,28 @@
 import {Component, OnInit} from '@angular/core';
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {NgClass, NgForOf, NgIf, TitleCasePipe} from "@angular/common";
 import {Room} from "../../models/room.model";
 import {RoomService} from "../../services/room.service";
-import {
-  MatCard, MatCardActions,
-  MatCardContent,
-  MatCardHeader,
-  MatCardImage,
-  MatCardSubtitle,
-  MatCardTitle
-} from "@angular/material/card";
-import {MatButton} from "@angular/material/button";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 import {ConfirmJoinRoomDialogComponent} from "../../components/confirm-join-room-dialog/confirm-join-room-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorJoinRoomDialogComponent} from "../../components/error-join-room-dialog/error-join-room-dialog.component";
 import { format, toZonedTime } from 'date-fns-tz';
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatOption, MatSelect} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
-import {MatInput} from "@angular/material/input";
 import {CreateRoomDialogComponent} from "../../components/create-room-dialog/create-room-dialog.component";
 import confetti from "canvas-confetti";
 import {ThemeService} from "../../../shared/services/theme.service";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {GoogleAnalyticsService} from "../../../shared/services/google-analytics.service";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-rooms',
   standalone: true,
   imports: [
-    MatGridList,
-    MatGridTile,
     NgForOf,
-    MatCard,
-    MatCardTitle,
-    MatCardHeader,
-    MatCardContent,
-    MatCardImage,
-    MatCardSubtitle,
-    MatCardActions,
-    MatButton,
     NgIf,
-    MatFormField,
-    MatSelect,
-    MatOption,
     FormsModule,
-    MatInput,
-    MatLabel,
     NgClass,
     TitleCasePipe,
     TranslatePipe
@@ -178,9 +151,13 @@ export class RoomsComponent implements OnInit {
     );
   }
 
-  private getUserIdFromLocalStorage(): string | null {
+  private getUserIdFromJwt(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('userId');
+      const token = localStorage.getItem('authToken'); // Usando la clave 'authToken'
+      if (token) {
+        const decoded: any = jwtDecode(token);
+        return decoded.userId || null; // Ajusta esto según la estructura de tu token
+      }
     }
     return null;
   }
@@ -190,7 +167,7 @@ export class RoomsComponent implements OnInit {
   }
 
   getUser(): void {
-    const userId = this.getUserIdFromLocalStorage();
+    const userId = this.getUserIdFromJwt();
     if (userId) {
       this.userService.getUserById(userId).subscribe(
         (data: any) => {

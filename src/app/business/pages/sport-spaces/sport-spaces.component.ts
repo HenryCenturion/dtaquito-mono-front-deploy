@@ -1,12 +1,7 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
-import {NgClass, NgForOf, NgIf, NgOptimizedImage, TitleCasePipe} from "@angular/common";
+import {Component, OnInit} from '@angular/core';
+import {NgClass, NgForOf, NgIf, TitleCasePipe} from "@angular/common";
 import {
-  MatCard,
-  MatCardContent,
-  MatCardHeader,
-  MatCardImage,
   MatCardModule,
-  MatCardTitle
 } from "@angular/material/card";
 import {SportSpace} from "../../models/sport-space.model";
 import {SportSpaceService} from "../../services/sport-space.service";
@@ -15,7 +10,6 @@ import {UserService} from "../../services/user.service";
 import {SubscriptionService} from "../../services/subscription.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AddSportSpacesDialogComponent} from "../../components/add-sport-spaces-dialog/add-sport-spaces-dialog.component";
-import {MatIcon} from "@angular/material/icon";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
@@ -23,23 +17,16 @@ import {MatInput} from "@angular/material/input";
 import confetti from 'canvas-confetti';
 import {ThemeService} from "../../../shared/services/theme.service";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
-import {classNames} from "@angular/cdk/schematics";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-sport-spaces',
   standalone: true,
   imports: [
     NgForOf,
-    MatCard,
-    MatCardTitle,
-    MatCardHeader,
-    MatCardContent,
-    MatCardImage,
-    NgOptimizedImage,
     MatCardModule,
     MatButtonModule,
     NgIf,
-    MatIcon,
     MatFormField,
     MatSelect,
     FormsModule,
@@ -118,7 +105,7 @@ export class SportSpacesComponent implements OnInit {
   }
 
   loadSportSpaces(): void {
-    const userId = this.getUserIdFromLocalStorage();
+    const userId = this.getUserIdFromJwt();
     if (userId) {
       this.userService.getUserById(userId).subscribe(
         (data: any) => {
@@ -154,9 +141,13 @@ export class SportSpacesComponent implements OnInit {
     );
   }
 
-  private getUserIdFromLocalStorage(): string | null {
+  private getUserIdFromJwt(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('userId');
+      const token = localStorage.getItem('authToken'); // Usando la clave 'authToken'
+      if (token) {
+        const decoded: any = jwtDecode(token);
+        return decoded.userId || null; // Ajusta esto según la estructura de tu token
+      }
     }
     return null;
   }

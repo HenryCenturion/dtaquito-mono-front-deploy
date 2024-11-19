@@ -2,45 +2,23 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Room} from "../../models/room.model";
 import {ActivatedRoute} from "@angular/router";
 import {RoomService} from "../../services/room.service";
-import {
-  MatCard,
-  MatCardContent,
-  MatCardHeader,
-  MatCardImage,
-  MatCardSubtitle,
-  MatCardTitle
-} from "@angular/material/card";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {UserService} from "../../services/user.service";
-import {MatFormField} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
-import {MatButton} from "@angular/material/button";
-import {MatIcon} from "@angular/material/icon";
 import {format, toZonedTime} from "date-fns-tz";
 import {WebSocketService} from "../../../shared/services/websocket.service";
 import {ChatService} from "../../services/chat.service";
-import {Observable} from "rxjs";
 import {ThemeService} from "../../../shared/services/theme.service";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-room-detail',
   standalone: true,
   imports: [
-    MatCardHeader,
-    MatCard,
     NgIf,
-    MatCardContent,
-    MatCardImage,
-    MatCardTitle,
-    MatCardSubtitle,
     NgForOf,
-    MatFormField,
-    MatInput,
     FormsModule,
-    MatButton,
-    MatIcon,
     NgClass,
     TranslatePipe
   ],
@@ -126,7 +104,7 @@ export class RoomDetailComponent implements OnInit {
   }
 
   getUser(): void {
-    const userId = this.getUserIdFromLocalStorage();
+    const userId = this.getUserIdFromJwt();
     if (userId) {
       this.userService.getUserById(userId).subscribe(
         (data: any) => {
@@ -136,9 +114,13 @@ export class RoomDetailComponent implements OnInit {
     }
   }
 
-  private getUserIdFromLocalStorage(): string | null {
+  private getUserIdFromJwt(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('userId');
+      const token = localStorage.getItem('authToken'); // Usando la clave 'authToken'
+      if (token) {
+        const decoded: any = jwtDecode(token);
+        return decoded.userId || null; // Ajusta esto según la estructura de tu token
+      }
     }
     return null;
   }
@@ -254,9 +236,8 @@ export class RoomDetailComponent implements OnInit {
   }
 
   formatDate2(dateString: string): string {
-    const timeZone = 'Etc/GMT+10';
-    const zonedDate = toZonedTime(new Date(dateString), timeZone);
-    return format(zonedDate, 'dd/MM/yyyy, HH:mm', { timeZone });
+    const date = new Date(dateString);
+    return format(date, 'dd/MM/yyyy, HH:mm');
   }
 
   sendMessage(event: Event): void {

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ThemeService} from "../../../shared/services/theme.service";
 import {FormsModule} from "@angular/forms";
-import {MatIcon} from "@angular/material/icon";
 import {NgClass, NgIf} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -9,13 +8,13 @@ import {AuthService} from "../../../iam/services/auth.service";
 import {TranslationService} from "../../../shared/services/translation.service";
 import {User} from "../../../business/models/user.model";
 import {UserService} from "../../../business/services/user.service";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     FormsModule,
-    MatIcon,
     NgIf,
     RouterLink,
     TranslatePipe,
@@ -77,7 +76,7 @@ export class HomeComponent implements OnInit {
   }
 
   getUser(): void {
-    const userId = this.getUserIdFromLocalStorage();
+    const userId = this.getUserIdFromJwt();
     if (userId) {
       this.userService.getUserById(userId).subscribe(
         (data: any) => {
@@ -92,9 +91,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private getUserIdFromLocalStorage(): string | null {
+  private getUserIdFromJwt(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('userId');
+      const token = localStorage.getItem('authToken'); // Usando la clave 'authToken'
+      if (token) {
+        const decoded: any = jwtDecode(token);
+        return decoded.userId || null; // Ajusta esto según la estructura de tu token
+      }
     }
     return null;
   }

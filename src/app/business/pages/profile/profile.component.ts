@@ -1,36 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from "../../models/user.model";
 import { UserService } from "../../services/user.service";
-import { MatDrawer, MatDrawerContainer } from "@angular/material/sidenav";
-import {NgClass, NgIf} from "@angular/common";
-import { MatButton } from "@angular/material/button";
+import {NgIf} from "@angular/common";
 import { MatIcon } from "@angular/material/icon";
-import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from "@angular/material/expansion";
 import { FormsModule } from "@angular/forms";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
 import {ThemeService} from "../../../shared/services/theme.service";
-import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 import {AuthService} from "../../../iam/services/auth.service";
 import {TranslationService} from "../../../shared/services/translation.service";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
-    MatDrawerContainer,
-    MatDrawer,
     NgIf,
-    MatButton,
     MatIcon,
-    MatExpansionPanel,
-    MatExpansionPanelTitle,
-    MatExpansionPanelHeader,
     FormsModule,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgClass,
     TranslatePipe
   ],
   templateUrl: './profile.component.html',
@@ -58,7 +44,7 @@ export class ProfileComponent implements OnInit {
 
     this.language = localStorage.getItem('language') || 'en';
 
-    const userId = this.getUserIdFromLocalStorage();
+    const userId = this.getUserIdFromJwt();
     if (userId) {
       this.userService.getUserById(userId).subscribe(
         (data: User) => {
@@ -95,9 +81,13 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  private getUserIdFromLocalStorage(): string | null {
+  private getUserIdFromJwt(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('userId');
+      const token = localStorage.getItem('authToken'); // Usando la clave 'authToken'
+      if (token) {
+        const decoded: any = jwtDecode(token);
+        return decoded.userId || null; // Ajusta esto según la estructura de tu token
+      }
     }
     return null;
   }

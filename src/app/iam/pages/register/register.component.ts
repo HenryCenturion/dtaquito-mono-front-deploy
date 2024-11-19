@@ -2,12 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
 import {Router, RouterLink} from "@angular/router";
-import { MatFormField } from "@angular/material/form-field";
-import { MatInput, MatInputModule } from "@angular/material/input";
+import {MatInputModule } from "@angular/material/input";
 import {NgClass, NgIf} from "@angular/common";
-import { MatOption, MatSelect } from "@angular/material/select";
-import { MatButton } from "@angular/material/button";
-import {MatIcon} from "@angular/material/icon";
 import {ThemeService} from "../../../shared/services/theme.service";
 import {TranslationService} from "../../../shared/services/translation.service";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -17,16 +13,10 @@ import {TranslatePipe} from "@ngx-translate/core";
   standalone: true,
   imports: [
     FormsModule,
-    MatFormField,
     ReactiveFormsModule,
-    MatInput,
     MatInputModule,
     NgIf,
-    MatSelect,
-    MatOption,
-    MatButton,
     RouterLink,
-    MatIcon,
     NgClass,
     TranslatePipe
   ],
@@ -41,7 +31,7 @@ export class RegisterComponent implements OnInit {
   subscriptionFormControl = new FormControl('', [Validators.required]);
   bankAccountFormControl = new FormControl('', [Validators.required, Validators.email]);
   errorMessage: string | null = null;
-  language: string = 'en';
+  language: string = 'es';
   isDarkMode = false;
 
   constructor(private authService: AuthService,
@@ -56,9 +46,9 @@ export class RegisterComponent implements OnInit {
       this.applyTheme();
     });
     if (typeof localStorage !== 'undefined') {
-      this.language = localStorage.getItem('language') || 'en';
+      this.language = localStorage.getItem('language') || 'es';
     } else {
-      this.language = 'en';
+      this.language = 'es';
     }
     this.subscriptionFormControl.disable();
   }
@@ -96,7 +86,7 @@ export class RegisterComponent implements OnInit {
       };
 
       this.authService.register(user).subscribe(
-        (response: any) => {
+        () => {
           this.router.navigate(['/login']);
         },
         error => {

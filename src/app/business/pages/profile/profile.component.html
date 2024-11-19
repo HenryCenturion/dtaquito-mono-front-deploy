@@ -22,27 +22,27 @@
           </div>
 
           <!-- Botones de cambio de tema e idioma con estilo, animación, icono y texto -->
-          <div class="flex justify-center mt-6 w-full lg:w-3/4 mx-auto space-x-4">
-            <button type="button"
-                    (click)="toggleDarkMode()"
-                    class="relative flex h-10 w-auto items-center justify-center overflow-hidden bg-gray-600 dark:bg-amber-500 text-white dark:text-gray-200 shadow-2xl transition-all rounded-xl before:absolute before:h-0 before:w-0 before:rounded-full before:bg-gray-700 dark:before:bg-amber-600 hover:text-white dark:hover:text-gray-200 before:duration-500 before:ease-out hover:shadow-green-400 dark:hover:shadow-amber-400 hover:before:h-56 hover:before:w-56 hover:bg-white dark:hover:bg-amber-600 px-3 py-2"
-                    [ngClass]="{
-    'opacity-100 transform hover:scale-105': true
-  }">
-              <mat-icon class="relative z-10 hover:text-white">{{ isDarkMode ? 'wb_sunny' : 'brightness_2' }}</mat-icon>
-              <span class="ml-2 relative z-10 hidden sm:inline">{{ isDarkMode ? ('header.light_mode' | translate) : ('header.dark_mode' | translate) }}</span>
-            </button>
-            <button type="button"
-                    (click)="changeLanguage()"
-                    class="relative flex h-10 w-auto items-center justify-center overflow-hidden bg-[#5BC0EB] text-white dark:text-gray-200 shadow-xl transition-all rounded-xl before:absolute before:h-0 before:w-0 before:rounded-full before:bg-[#3387ab] dark:before:bg-[#3387ab] hover:text-white dark:hover:text-gray-200 before:duration-500 before:ease-out hover:shadow-lg dark:hover:shadow-xl hover:bg-[#3387ab] dark:hover:bg-[#3387ab] dark:hover:shadow-[#3387ab] px-3 py-2"
-                    [ngClass]="{
-    'opacity-100 transform hover:scale-105': true
-  }">
-              <span *ngIf="language === 'es'" class="flag-icon flag-icon-us h-6 w-6"></span>
-              <span *ngIf="language !== 'es'" class="flag-icon flag-icon-pe h-6 w-6"></span>
-              <span class="ml-2 relative z-10 hidden sm:inline">{{ language === 'es' ? 'English' : 'Español' }}</span>
-            </button>
-          </div>
+<!--          <div class="flex justify-center mt-6 w-full lg:w-3/4 mx-auto space-x-4">-->
+<!--            <button type="button"-->
+<!--                    (click)="toggleDarkMode()"-->
+<!--                    class="relative flex h-10 w-auto items-center justify-center overflow-hidden bg-gray-600 dark:bg-amber-500 text-white dark:text-gray-200 shadow-2xl transition-all rounded-xl before:absolute before:h-0 before:w-0 before:rounded-full before:bg-gray-700 dark:before:bg-amber-600 hover:text-white dark:hover:text-gray-200 before:duration-500 before:ease-out hover:shadow-green-400 dark:hover:shadow-amber-400 hover:before:h-56 hover:before:w-56 hover:bg-white dark:hover:bg-amber-600 px-3 py-2"-->
+<!--                    [ngClass]="{-->
+<!--    'opacity-100 transform hover:scale-105': true-->
+<!--  }">-->
+<!--              <mat-icon class="relative z-10 hover:text-white">{{ isDarkMode ? 'wb_sunny' : 'brightness_2' }}</mat-icon>-->
+<!--              <span class="ml-2 relative z-10 hidden sm:inline">{{ isDarkMode ? ('header.light_mode' | translate) : ('header.dark_mode' | translate) }}</span>-->
+<!--            </button>-->
+<!--            <button type="button"-->
+<!--                    (click)="changeLanguage()"-->
+<!--                    class="relative flex h-10 w-auto items-center justify-center overflow-hidden bg-[#5BC0EB] text-white dark:text-gray-200 shadow-xl transition-all rounded-xl before:absolute before:h-0 before:w-0 before:rounded-full before:bg-[#3387ab] dark:before:bg-[#3387ab] hover:text-white dark:hover:text-gray-200 before:duration-500 before:ease-out hover:shadow-lg dark:hover:shadow-xl hover:bg-[#3387ab] dark:hover:bg-[#3387ab] dark:hover:shadow-[#3387ab] px-3 py-2"-->
+<!--                    [ngClass]="{-->
+<!--    'opacity-100 transform hover:scale-105': true-->
+<!--  }">-->
+<!--              <span *ngIf="language === 'es'" class="flag-icon flag-icon-us h-6 w-6"></span>-->
+<!--              <span *ngIf="language !== 'es'" class="flag-icon flag-icon-pe h-6 w-6"></span>-->
+<!--              <span class="ml-2 relative z-10 hidden sm:inline">{{ language === 'es' ? 'English' : 'Español' }}</span>-->
+<!--            </button>-->
+<!--          </div>-->
 
           <div class="items-center mt-8 text-[#202142] dark:text-gray-200 w-full">
             <form (ngSubmit)="onSubmit()" #profileForm="ngForm" class="w-full">
@@ -51,33 +51,35 @@
                 <label for="name" class="block mb-1 sm:mb-2 font-medium text-green-900 dark:text-green-300 text-left text-sm sm:text-base lg:text-lg">
                   {{ 'profilePage.name' | translate }}
                 </label>
-                <input type="text" id="name" [(ngModel)]="user.name" name="name" placeholder="{{ 'profilePage.name' | translate }}"
-                       class="bg-green-50 dark:bg-gray-700 border border-green-300 dark:border-green-500 text-green-900 dark:text-gray-200 rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 sm:p-2.5 lg:p-3 text-sm sm:text-base lg:text-lg transition-all duration-300 ease-in-out transform focus:scale-105" required>
+                <p id="name" class="bg-green-50 dark:bg-gray-700 border border-green-300 dark:border-green-500 text-green-900 dark:text-gray-200 rounded-lg block w-full p-2 sm:p-2.5 lg:p-3 text-sm sm:text-base lg:text-lg transition-all duration-300 ease-in-out transform">
+                  {{ user.name }}
+                </p>
               </div>
 
               <div class="flex flex-col mb-6 w-full sm:w-3/4 md:w-2/3 lg:w-3/4 xl:w-2/3 mx-auto">
                 <label for="email" class="block mb-1 sm:mb-2 font-medium text-green-900 dark:text-green-300 text-left text-sm sm:text-base lg:text-lg">
                   {{ 'profilePage.email' | translate }}
                 </label>
-                <input type="email" id="email" [(ngModel)]="user.email" name="email" placeholder="{{ 'profilePage.email' | translate }}"
-                       class="bg-green-50 dark:bg-gray-700 border border-green-300 dark:border-green-500 text-green-900 dark:text-gray-200 rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 sm:p-2.5 lg:p-3 text-sm sm:text-base lg:text-lg transition-all duration-300 ease-in-out transform focus:scale-105" required>
+                <p id="email" class="bg-green-50 dark:bg-gray-700 border border-green-300 dark:border-green-500 text-green-900 dark:text-gray-200 rounded-lg block w-full p-2 sm:p-2.5 lg:p-3 text-sm sm:text-base lg:text-lg transition-all duration-300 ease-in-out transform">
+                  {{ user.email }}
+                </p>
                 <div *ngIf="!isEmailValid() && profileForm.controls['email']" class="text-red-600 dark:text-red-400 mt-1 text-xs sm:text-sm">
                   {{ 'profilePage.validEmailMessage' | translate }}
                 </div>
               </div>
 
               <!-- Botón de guardar en verde con estilo deshabilitado y animación -->
-              <div class="flex justify-center mt-6 w-full lg:w-3/4 mx-auto">
-                <button type="submit"
-                        [disabled]="!isFormChanged() || !isEmailValid()"
-                        class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-opacity duration-300 ease-in-out"
-                        [ngClass]="{
-                          'opacity-50 cursor-not-allowed': !isFormChanged() || !isEmailValid(),
-                          'opacity-100 transform hover:scale-105': isFormChanged() && isEmailValid()
-                        }">
-                  {{ 'profilePage.save' | translate }}
-                </button>
-              </div>
+<!--              <div class="flex justify-center mt-6 w-full lg:w-3/4 mx-auto">-->
+<!--                <button type="submit"-->
+<!--                        [disabled]="!isFormChanged() || !isEmailValid()"-->
+<!--                        class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-opacity duration-300 ease-in-out"-->
+<!--                        [ngClass]="{-->
+<!--                          'opacity-50 cursor-not-allowed': !isFormChanged() || !isEmailValid(),-->
+<!--                          'opacity-100 transform hover:scale-105': isFormChanged() && isEmailValid()-->
+<!--                        }">-->
+<!--                  {{ 'profilePage.save' | translate }}-->
+<!--                </button>-->
+<!--              </div>-->
 
               <!-- Botón de cerrar sesión-->
               <div class="flex justify-center mt-6 w-full lg:w-3/4 mx-auto">

@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch} from "@angular/common/http";
+import {HttpClient, provideHttpClient, withFetch} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 
@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
           useFactory: (createTranslateLoader),
           deps: [HttpClient]
         },
-        defaultLanguage: 'en'
+        defaultLanguage: 'es'
       })
     ])
   ]
