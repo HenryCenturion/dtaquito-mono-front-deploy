@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from "../../models/user.model";
 import { UserService } from "../../services/user.service";
-import {NgIf} from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
 import { MatIcon } from "@angular/material/icon";
 import { FormsModule } from "@angular/forms";
 import {ThemeService} from "../../../shared/services/theme.service";
@@ -17,7 +17,8 @@ import {jwtDecode} from "jwt-decode";
     NgIf,
     MatIcon,
     FormsModule,
-    TranslatePipe
+    TranslatePipe,
+    NgClass
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -108,11 +109,11 @@ export class ProfileComponent implements OnInit {
       if (this.newPassword) {
         this.user.password = this.newPassword;
       }
-      // this.userService.updateUser(this.user).subscribe(
-      //   () => {
-      //     location.reload();
-      //   }
-      // );
+      this.userService.updateUser(this.user).subscribe(
+        () => {
+          location.reload();
+        }
+      );
     }
   }
 

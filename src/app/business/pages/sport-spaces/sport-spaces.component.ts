@@ -57,8 +57,8 @@ export class SportSpacesComponent implements OnInit {
     maxPrice: 0
   };
   sports = [
-    { id: 1, name: 'Football' },
-    { id: 2, name: 'Billiards' }
+    { id: 1, name: 'Futbol' },
+    { id: 2, name: 'Billar' }
   ];
   districts = [
     'San Miguel', 'San Borja', 'San Isidro', 'Surco', 'Magdalena', 'Pueblo Libre', 'Miraflores', 'Barranco', 'La Molina',

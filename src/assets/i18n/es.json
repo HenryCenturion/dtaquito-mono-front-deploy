@@ -69,7 +69,8 @@
       "player": "Jugador",
       "owner": "Propietario",
       "unknown": "Rol desconocido"
-    }
+    },
+    "newPassword": "Nueva contraseña"
   },
   "subscriptionPage": {
     "title": "Suscripciones",

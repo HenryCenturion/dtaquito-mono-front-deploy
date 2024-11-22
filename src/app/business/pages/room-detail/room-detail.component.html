@@ -48,7 +48,7 @@
                 <i class="fas fa-calendar-alt text-green-500 mr-2"></i>
                 <span class="font-semibold text-gray-600 dark:text-white">{{ 'roomDetailPage.dayPlay' | translate }}</span>
               </span>
-              <span class="text-gray-600 dark:text-gray-300">{{ formatDate1(room.openingDate) }}</span>
+              <span class="text-gray-600 dark:text-gray-300">{{ formatDate3(room.openingDate) }}</span>
             </div>
 
             <div class="flex items-center justify-between">
@@ -164,7 +164,7 @@
                         {{ message.content }}
                       </div>
                     </div>
-                    <span class="text-xs text-gray-400 dark:text-gray-500 mt-2 mr-4 block text-right">{{ formatDate2(message.createdAt) }}</span>
+                    <span class="text-xs text-gray-400 dark:text-gray-500 mt-2 mr-4 block text-right">{{ formatDate1(message.createdAt) }}</span>
                   </div>
                 </div>
               </div>

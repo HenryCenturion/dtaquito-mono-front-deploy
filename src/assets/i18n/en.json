@@ -68,7 +68,8 @@
       "player": "Player",
       "owner": "Owner",
       "unknown": "Unknown Role"
-    }
+    },
+    "newPassword": "New Password"
   },
   "subscriptionPage": {
     "title": "Subscriptions",

@@ -230,7 +230,7 @@ export class RoomDetailComponent implements OnInit {
   }
 
   formatDate1(dateString: string): string {
-    const timeZone = 'Etc/GMT-0';
+    const timeZone = 'Etc/GMT+10';
     const zonedDate = toZonedTime(new Date(dateString), timeZone);
     return format(zonedDate, 'dd/MM/yyyy, HH:mm', { timeZone });
   }
@@ -238,6 +238,12 @@ export class RoomDetailComponent implements OnInit {
   formatDate2(dateString: string): string {
     const date = new Date(dateString);
     return format(date, 'dd/MM/yyyy, HH:mm');
+  }
+
+  formatDate3(dateString: string): string {
+    const timeZone = 'Etc/GMT-0';
+    const zonedDate = toZonedTime(new Date(dateString), timeZone);
+    return format(zonedDate, 'dd/MM/yyyy, HH:mm', { timeZone });
   }
 
   sendMessage(event: Event): void {
